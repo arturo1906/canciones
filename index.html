@@ -2,10 +2,16 @@
 <html lang="es">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mi Álbum</title>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Álbum Interactivo</title>
+
 
 <style>
 
@@ -15,215 +21,91 @@
     padding: 0;
 }
 
+
 html,
 body {
+
     width: 100%;
     height: 100%;
+
 }
+
 
 body {
-    background: #080808;
+
+    background: #070707;
+
     color: white;
-    font-family: Georgia, serif;
+
     overflow: hidden;
+
+    font-family: Georgia, serif;
+
 }
 
 
-/* =====================================
-   CONTENEDOR GENERAL
-===================================== */
+/* ==================================================
+   ESCENARIO
+================================================== */
 
-#album {
+#stage {
 
     width: 100vw;
     height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
     position: relative;
 
+    padding: 20px;
+
 }
 
 
-/* =====================================
+/* ==================================================
    PORTADA
-===================================== */
+================================================== */
 
 #cover {
 
-    width: min(90vw, 600px);
-    height: min(90vh, 800px);
-
     position: relative;
 
-    cursor: pointer;
+    width: min(520px, 88vw);
+    height: min(760px, 82vh);
+
+    background-image:
+        url("./portada_general.jpeg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,.9);
+        0 30px 100px rgba(0,0,0,.95);
 
     overflow: hidden;
 
-    border-radius: 4px;
-
 }
 
 
-#cover img {
+#cover::after {
 
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-
-}
-
-
-.cover-overlay {
+    content: "";
 
     position: absolute;
 
     inset: 0;
 
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
     background:
         linear-gradient(
-            transparent,
-            rgba(0,0,0,.25)
-        );
-
-}
-
-
-.cover-title {
-
-    background:
-        rgba(0,0,0,.75);
-
-    color:
-        #e4ca91;
-
-    border:
-        1px solid #e4ca91;
-
-    padding:
-        18px 40px;
-
-    letter-spacing:
-        5px;
-
-    text-transform:
-        uppercase;
-
-    font-size:
-        clamp(20px, 4vw, 38px);
-
-    text-align:
-        center;
-
-}
-
-
-.open-text {
-
-    margin-top:
-        25px;
-
-    background:
-        rgba(0,0,0,.75);
-
-    padding:
-        10px 20px;
-
-    border-radius:
-        30px;
-
-    font-family:
-        Arial, sans-serif;
-
-    font-size:
-        14px;
-
-}
-
-
-/* =====================================
-   LIBRO ABIERTO
-===================================== */
-
-#book {
-
-    display: none;
-
-    width:
-        min(95vw, 1200px);
-
-    height:
-        min(85vh, 760px);
-
-    position: relative;
-
-    background:
-        #111;
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.95);
-
-}
-
-
-/* =====================================
-   IMAGEN PANORÁMICA
-===================================== */
-
-#panorama {
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    background:
-        #111;
-
-    display: block;
-
-}
-
-
-/* =====================================
-   UNIÓN CENTRAL DEL LIBRO
-===================================== */
-
-.book-center {
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: 50%;
-
-    width: 4px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,.15),
-            rgba(0,0,0,.75),
-            rgba(255,255,255,.08),
-            rgba(0,0,0,.2)
+            to bottom,
+            transparent 45%,
+            rgba(0,0,0,.65)
         );
 
     pointer-events: none;
@@ -231,9 +113,199 @@ body {
 }
 
 
-/* sombra páginas */
+.cover-content {
 
-#book::before {
+    position: absolute;
+
+    z-index: 5;
+
+    left: 0;
+    right: 0;
+    bottom: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.cover-title {
+
+    padding:
+        15px 30px;
+
+    background:
+        rgba(0,0,0,.70);
+
+    border:
+        1px solid #e1c88d;
+
+    color:
+        #e1c88d;
+
+    letter-spacing:
+        4px;
+
+    font-size:
+        clamp(20px, 4vw, 32px);
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* ==================================================
+   BOTÓN INICIAL
+================================================== */
+
+#startButton {
+
+    border:
+        1px solid #e1c88d;
+
+    background:
+        rgba(0,0,0,.85);
+
+    color:
+        #e1c88d;
+
+    padding:
+        12px 25px;
+
+    border-radius:
+        30px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        15px;
+
+}
+
+
+#startButton:hover {
+
+    background:
+        #e1c88d;
+
+    color:
+        black;
+
+}
+
+
+
+/* ==================================================
+   LIBRO
+================================================== */
+
+#book {
+
+    display: none;
+
+    position: relative;
+
+    /*
+       Libro panorámico.
+    */
+
+    width:
+        min(1400px, 94vw);
+
+    height:
+        min(800px, 86vh);
+
+    background:
+        #111;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 35px 110px rgba(0,0,0,.95);
+
+}
+
+
+/* ==================================================
+   IMAGEN
+
+   AQUÍ ESTÁ EL CAMBIO IMPORTANTE:
+
+   cover = llena absolutamente todo
+   el espacio disponible.
+================================================== */
+
+#spread {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        cover;
+
+}
+
+
+/* ==================================================
+   SOMBRA CENTRAL DEL LIBRO
+================================================== */
+
+#centerShadow {
+
+    position: absolute;
+
+    z-index: 10;
+
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+
+    width: 34px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            to right,
+
+            rgba(0,0,0,0),
+
+            rgba(0,0,0,.22),
+
+            rgba(0,0,0,.7),
+
+            rgba(0,0,0,.20),
+
+            rgba(0,0,0,0)
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* sombra exterior */
+
+#book::after {
 
     content: "";
 
@@ -244,19 +316,24 @@ body {
     pointer-events: none;
 
     box-shadow:
-        inset 30px 0 50px rgba(0,0,0,.25),
-        inset -30px 0 50px rgba(0,0,0,.25);
 
-    z-index: 3;
+        inset 35px 0 50px
+        rgba(0,0,0,.20),
+
+        inset -35px 0 50px
+        rgba(0,0,0,.20);
 
 }
 
 
-/* =====================================
-   BOTONES
-===================================== */
 
-.nav-button {
+/* ==================================================
+   FLECHAS
+================================================== */
+
+.navigation {
+
+    display: none;
 
     position: fixed;
 
@@ -265,72 +342,115 @@ body {
     transform:
         translateY(-50%);
 
-    z-index: 20;
+    z-index: 100;
 
-    width: 55px;
-    height: 55px;
+    width: 58px;
+    height: 58px;
 
-    border-radius: 50%;
-
-    border:
-        1px solid rgba(255,255,255,.5);
+    border-radius:
+        50%;
 
     background:
-        rgba(0,0,0,.65);
+        rgba(0,0,0,.72);
 
-    color: white;
+    color:
+        white;
+
+    border:
+        1px solid rgba(255,255,255,.4);
+
+    cursor:
+        pointer;
 
     font-size:
-        30px;
-
-    cursor: pointer;
-
-    display: none;
+        34px;
 
 }
 
 
 #prev {
 
-    left: 20px;
+    left: 18px;
 
 }
 
 
 #next {
 
-    right: 20px;
+    right: 18px;
 
 }
 
 
-.nav-button:hover {
+.navigation:hover {
 
     background:
-        rgba(255,255,255,.15);
+        rgba(255,255,255,.18);
 
 }
 
 
-/* =====================================
-   INFORMACIÓN
-===================================== */
 
-#counter {
+/* ==================================================
+   AUDIO
+================================================== */
+
+#audioButton {
 
     position: fixed;
 
-    bottom: 18px;
+    z-index: 200;
+
+    top: 18px;
+    right: 18px;
+
+    display: none;
+
+    border:
+        1px solid #e1c88d;
+
+    background:
+        rgba(0,0,0,.82);
+
+    color:
+        #e1c88d;
+
+    padding:
+        10px 18px;
+
+    border-radius:
+        30px;
+
+    cursor:
+        pointer;
+
+}
+
+
+
+/* ==================================================
+   CONTADOR
+================================================== */
+
+#counter {
+
+    display: none;
+
+    position: fixed;
+
     left: 50%;
+    bottom: 18px;
 
     transform:
         translateX(-50%);
+
+    z-index: 100;
 
     background:
         rgba(0,0,0,.75);
 
     padding:
-        8px 18px;
+        8px 16px;
 
     border-radius:
         20px;
@@ -341,73 +461,34 @@ body {
     font-size:
         13px;
 
-    display: none;
-
-    z-index: 30;
-
 }
 
 
-/* =====================================
-   AUDIO
-===================================== */
 
-#audioControls {
-
-    position: fixed;
-
-    top: 15px;
-    right: 15px;
-
-    z-index: 50;
-
-    display: none;
-
-}
-
-
-#audioControls button {
-
-    background:
-        rgba(0,0,0,.8);
-
-    border:
-        1px solid #e4ca91;
-
-    color:
-        #e4ca91;
-
-    padding:
-        10px 18px;
-
-    border-radius:
-        25px;
-
-    cursor:
-        pointer;
-
-}
-
-
-/* =====================================
-   DEBUG
-===================================== */
+/* ==================================================
+   DIAGNÓSTICO
+================================================== */
 
 #status {
 
     position: fixed;
 
-    bottom: 10px;
-    left: 10px;
+    left: 12px;
+    bottom: 12px;
+
+    z-index: 500;
+
+    background:
+        rgba(0,0,0,.80);
 
     padding:
         7px 10px;
 
-    background:
-        rgba(0,0,0,.7);
+    border-radius:
+        5px;
 
     color:
-        #aaa;
+        #bbb;
 
     font-family:
         Arial, sans-serif;
@@ -415,17 +496,23 @@ body {
     font-size:
         11px;
 
-    z-index:
-        100;
-
 }
 
 
-/* =====================================
-   CELULAR
-===================================== */
 
-@media(max-width: 700px) {
+/* ==================================================
+   CELULAR
+================================================== */
+
+@media(max-width:700px) {
+
+
+    #stage {
+
+        padding: 5px;
+
+    }
+
 
     #book {
 
@@ -433,33 +520,34 @@ body {
             100vw;
 
         height:
-            75vh;
+            72vh;
 
     }
 
 
-    .nav-button {
+    .navigation {
 
-        width:
-            45px;
+        width: 46px;
+        height: 46px;
 
-        height:
-            45px;
-
-        font-size:
-            24px;
+        font-size: 26px;
 
     }
 
 
     #prev {
+
         left: 5px;
+
     }
 
 
     #next {
+
         right: 5px;
+
     }
+
 
 }
 
@@ -471,60 +559,64 @@ body {
 <body>
 
 
-<div id="album">
+<div id="stage">
 
 
-    <!-- ===================================
+    <!-- =========================================
          PORTADA
-    ==================================== -->
+    ========================================== -->
 
     <div id="cover">
 
-        <img
-            id="coverImage"
-            alt="Portada del álbum"
-        >
 
-        <div class="cover-overlay">
+        <div class="cover-content">
+
 
             <div class="cover-title">
                 Mi Álbum
             </div>
 
-            <div class="open-text">
-                Haz clic para abrir
-            </div>
+
+            <button id="startButton">
+
+                ▶ Iniciar álbum
+
+            </button>
+
 
         </div>
 
+
     </div>
 
 
 
-    <!-- ===================================
+    <!-- =========================================
          LIBRO
-    ==================================== -->
+    ========================================== -->
 
     <div id="book">
 
-        <img
-            id="panorama"
-            alt="Fotografía del álbum"
-        >
 
-        <div class="book-center"></div>
+        <div id="spread"></div>
+
+
+        <div id="centerShadow"></div>
+
 
     </div>
+
 
 </div>
 
 
 
-<!-- NAVEGACIÓN -->
+<!-- FLECHAS -->
+
 
 <button
     id="prev"
-    class="nav-button"
+    class="navigation"
 >
     ‹
 </button>
@@ -532,7 +624,7 @@ body {
 
 <button
     id="next"
-    class="nav-button"
+    class="navigation"
 >
     ›
 </button>
@@ -541,23 +633,23 @@ body {
 
 <!-- AUDIO -->
 
+
 <audio
     id="audioPlayer"
-    preload="metadata"
+    preload="auto"
 ></audio>
 
 
-<div id="audioControls">
+<button id="audioButton">
 
-    <button id="audioButton">
-        🔊 Música
-    </button>
+    🔊 Música
 
-</div>
+</button>
 
 
 
 <!-- CONTADOR -->
+
 
 <div id="counter"></div>
 
@@ -565,211 +657,193 @@ body {
 
 <!-- DIAGNÓSTICO -->
 
+
 <div id="status">
-    Iniciando...
+
+    Esperando...
+
 </div>
 
 
 
 <script>
 
+
 document.addEventListener(
 "DOMContentLoaded",
 async function () {
 
 
-/* ======================================================
+
+/* ==================================================
    ELEMENTOS
-====================================================== */
+================================================== */
+
 
 const cover =
-    document.getElementById("cover");
+    document.getElementById(
+        "cover"
+    );
 
-const coverImage =
-    document.getElementById("coverImage");
 
 const book =
-    document.getElementById("book");
+    document.getElementById(
+        "book"
+    );
 
-const panorama =
-    document.getElementById("panorama");
 
-const previousButton =
-    document.getElementById("prev");
+const spread =
+    document.getElementById(
+        "spread"
+    );
+
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+
+const prevButton =
+    document.getElementById(
+        "prev"
+    );
+
 
 const nextButton =
-    document.getElementById("next");
+    document.getElementById(
+        "next"
+    );
 
-const counter =
-    document.getElementById("counter");
-
-const audioPlayer =
-    document.getElementById("audioPlayer");
 
 const audioButton =
-    document.getElementById("audioButton");
+    document.getElementById(
+        "audioButton"
+    );
 
-const audioControls =
-    document.getElementById("audioControls");
+
+const audioPlayer =
+    document.getElementById(
+        "audioPlayer"
+    );
+
+
+const counter =
+    document.getElementById(
+        "counter"
+    );
+
 
 const status =
-    document.getElementById("status");
-
-
-
-/* ======================================================
-   EVITAR CACHÉ DE GITHUB DURANTE LAS PRUEBAS
-====================================================== */
-
-const version =
-    Date.now();
-
-
-function archivo(nombre) {
-
-    const url =
-        new URL(
-            nombre,
-            document.baseURI
-        );
-
-    url.searchParams.set(
-        "v",
-        version
-    );
-
-    return url.href;
-
-}
-
-
-
-/* ======================================================
-   PORTADA
-
-   Busca exactamente:
-
-   portada_general.jpeg
-====================================================== */
-
-coverImage.src =
-    archivo(
-        "portada_general.jpeg"
+    document.getElementById(
+        "status"
     );
 
 
-coverImage.onload =
-function () {
 
-    status.textContent =
-        "✓ portada_general.jpeg encontrada";
-
-};
+/* ==================================================
+   CONFIGURACIÓN
+================================================== */
 
 
-coverImage.onerror =
-function () {
+/*
+   Canción exclusiva de portada.
+*/
 
-    status.textContent =
-        "❌ No se encontró portada_general.jpeg";
-
-    console.error(
-        "ERROR PORTADA:",
-        coverImage.src
-    );
-
-};
+const AUDIO_PORTADA =
+    "./cancion_portada.mp3";
 
 
 
-/* ======================================================
-   DETECTAR FONDOS AUTOMÁTICAMENTE
+/*
+   Número máximo que revisaremos.
 
-   Busca:
+   No significa que tengas que tener
+   100 imágenes.
 
-   fondo_1.jpeg
-   fondo_2.jpeg
-   fondo_3.jpeg
-   ...
+   Se detiene en la primera que falte.
+*/
 
-   Cuando encuentra el primero que no existe,
-   deja de buscar.
-====================================================== */
-
-const paginas = [];
+const MAX_PAGINAS =
+    100;
 
 
-function comprobarImagen(
-    numero
-) {
+
+/* ==================================================
+   DETECTAR IMÁGENES
+================================================== */
+
+
+const paginas =
+    [];
+
+
+function existeImagen(numero) {
+
 
     return new Promise(
+
         function(resolve) {
 
 
-            const nombre =
-                `fondo_${numero}.jpeg`;
-
-
-            const imagen =
+            const img =
                 new Image();
 
 
-            imagen.onload =
-            function () {
+            img.onload =
+                function() {
 
-                resolve(
-                    true
-                );
+                    resolve(true);
 
-            };
+                };
 
 
-            imagen.onerror =
-            function () {
+            img.onerror =
+                function() {
 
-                resolve(
-                    false
-                );
+                    resolve(false);
 
-            };
+                };
 
 
-            imagen.src =
-                archivo(nombre);
+            img.src =
+                `./fondo_${numero}.jpeg`;
+
 
         }
+
     );
+
 
 }
 
 
 
-/* ======================================================
-   ESCANEAR HASTA 200 POSIBLES FONDOS
-====================================================== */
+/* ==================================================
+   BUSCAR fondo_1, fondo_2...
+================================================== */
+
 
 status.textContent =
-    "Buscando fotografías...";
+    "Buscando imágenes...";
 
 
 for (
+
     let i = 1;
-    i <= 200;
+
+    i <= MAX_PAGINAS;
+
     i++
+
 ) {
 
 
     const existe =
-        await comprobarImagen(i);
+        await existeImagen(i);
 
 
     if (!existe) {
-
-        /*
-        Detenemos la búsqueda
-        en el primer número que falte.
-        */
 
         break;
 
@@ -778,14 +852,11 @@ for (
 
     paginas.push({
 
-        numero:
-            i,
-
         imagen:
-            `fondo_${i}.jpeg`,
+            `./fondo_${i}.jpeg`,
 
         audio:
-            `cancion_${i}.mp3`
+            `./cancion_${i}.mp3`
 
     });
 
@@ -793,86 +864,237 @@ for (
 }
 
 
+
 console.log(
-    "Páginas detectadas:",
+    "Imágenes encontradas:",
     paginas
 );
 
 
-
-if (
-    paginas.length === 0
-) {
-
-    status.textContent =
-        "❌ No se encontró fondo_1.jpeg";
-
-}
-
-else {
-
-    status.textContent =
-        `✓ ${paginas.length} fotografía(s) encontrada(s)`;
-
-}
+status.textContent =
+    `Encontradas ${paginas.length} imagen(es)`;
 
 
 
-/* ======================================================
-   ESTADO DEL ÁLBUM
-====================================================== */
+/* ==================================================
+   VARIABLES
+================================================== */
+
 
 let paginaActual =
-    0;
+    -1;
 
 
-let albumAbierto =
-    false;
+/*
+   -1 = portada
+
+    0 = fondo_1
+
+    1 = fondo_2
+*/
 
 
-let sonidoActivo =
+let audioActivo =
     true;
 
 
-
-/* ======================================================
-   ABRIR ÁLBUM
-
-   Este clic también permite que el navegador
-   autorice posteriormente la reproducción de audio.
-====================================================== */
-
-cover.addEventListener(
-"click",
-function () {
+let albumIniciado =
+    false;
 
 
-    if (
-        paginas.length === 0
-    ) {
 
-        alert(
-            "No se encontró fondo_1.jpeg"
-        );
+/* ==================================================
+   FUNCIÓN DE AUDIO
+================================================== */
+
+
+async function reproducirAudio(
+    archivo
+) {
+
+
+    console.log(
+        "Intentando reproducir:",
+        archivo
+    );
+
+
+    /*
+       Detener canción anterior.
+    */
+
+
+    audioPlayer.pause();
+
+
+    audioPlayer.removeAttribute(
+        "src"
+    );
+
+
+    audioPlayer.load();
+
+
+
+    /*
+       Cargar nuevo archivo.
+    */
+
+
+    audioPlayer.src =
+        archivo;
+
+
+    audioPlayer.load();
+
+
+
+    if (!audioActivo) {
 
         return;
 
     }
 
 
-    albumAbierto =
+
+    try {
+
+
+        await audioPlayer.play();
+
+
+        status.textContent =
+            "▶ Música reproduciéndose";
+
+
+        console.log(
+            "Audio OK:",
+            archivo
+        );
+
+
+    }
+
+    catch(error) {
+
+
+        console.error(
+            "ERROR PLAY:",
+            error
+        );
+
+
+        status.textContent =
+            "⚠ Pulsa Música para iniciar audio";
+
+
+    }
+
+
+}
+
+
+
+/* ==================================================
+   DIAGNÓSTICO DE AUDIO
+================================================== */
+
+
+audioPlayer.addEventListener(
+"error",
+function () {
+
+
+    if (!audioPlayer.error) {
+
+        return;
+
+    }
+
+
+    let mensaje =
+        "Error desconocido";
+
+
+    switch(
+        audioPlayer.error.code
+    ) {
+
+
+        case 1:
+
+            mensaje =
+                "MEDIA_ERR_ABORTED";
+
+            break;
+
+
+        case 2:
+
+            mensaje =
+                "MEDIA_ERR_NETWORK";
+
+            break;
+
+
+        case 3:
+
+            mensaje =
+                "MEDIA_ERR_DECODE";
+
+            break;
+
+
+        case 4:
+
+            mensaje =
+                "MEDIA_ERR_SRC_NOT_SUPPORTED";
+
+            break;
+
+
+    }
+
+
+    console.error(
+
+        "ERROR AUDIO:",
+
+        mensaje,
+
+        audioPlayer.currentSrc
+
+    );
+
+
+    status.textContent =
+        "❌ " + mensaje;
+
+
+});
+
+
+
+/* ==================================================
+   INICIAR ÁLBUM
+
+   ESTE CLICK ES MUY IMPORTANTE.
+
+   Es la interacción que permite al
+   navegador autorizar el audio.
+================================================== */
+
+
+startButton.addEventListener(
+"click",
+async function () {
+
+
+    albumIniciado =
         true;
 
 
-    cover.style.display =
-        "none";
-
-
-    book.style.display =
-        "block";
-
-
-    previousButton.style.display =
+    audioButton.style.display =
         "block";
 
 
@@ -880,26 +1102,42 @@ function () {
         "block";
 
 
-    counter.style.display =
-        "block";
+    /*
+       Nos quedamos todavía en portada.
+
+       Así su canción puede escucharse.
+    */
 
 
-    audioControls.style.display =
-        "block";
+    paginaActual =
+        -1;
 
 
-    mostrarPagina(
-        0
+    startButton.textContent =
+        "Música iniciada ✓";
+
+
+    startButton.disabled =
+        true;
+
+
+    await reproducirAudio(
+        AUDIO_PORTADA
     );
+
+
+    status.textContent =
+        "Portada";
 
 
 });
 
 
 
-/* ======================================================
-   MOSTRAR PÁGINA
-====================================================== */
+/* ==================================================
+   MOSTRAR FOTO
+================================================== */
+
 
 function mostrarPagina(
     indice
@@ -907,8 +1145,11 @@ function mostrarPagina(
 
 
     if (
+
         indice < 0 ||
+
         indice >= paginas.length
+
     ) {
 
         return;
@@ -926,278 +1167,117 @@ function mostrarPagina(
         ];
 
 
-    /* IMAGEN */
 
-    panorama.src =
-        archivo(
-            datos.imagen
-        );
+    /*
+       Cambiar imagen.
 
-
-    panorama.onload =
-    function () {
-
-        status.textContent =
-            `✓ ${datos.imagen}`;
-
-    };
+       La imagen es el fondo completo
+       del libro.
+    */
 
 
-    panorama.onerror =
-    function () {
-
-        status.textContent =
-            `❌ Error cargando ${datos.imagen}`;
-
-    };
+    spread.style.backgroundImage =
+        `url("${datos.imagen}")`;
 
 
-    /* CONTADOR */
+
+    cover.style.display =
+        "none";
+
+
+    book.style.display =
+        "block";
+
+
+    prevButton.style.display =
+        "block";
+
+
+    nextButton.style.display =
+        "block";
+
+
+    counter.style.display =
+        "block";
+
+
 
     counter.textContent =
+
         `${paginaActual + 1} / ${paginas.length}`;
 
 
-    /* AUDIO */
 
     reproducirAudio(
         datos.audio
     );
 
 
-    /* BOTONES */
-
-    previousButton.style.opacity =
-        paginaActual === 0
-        ? "0.3"
-        : "1";
-
-
-    nextButton.style.opacity =
-        paginaActual ===
-        paginas.length - 1
-        ? "0.3"
-        : "1";
-
-
-}
-
-
-
-/* ======================================================
-   AUDIO
-====================================================== */
-
-function reproducirAudio(
-    nombreAudio
-) {
-
-
-    audioPlayer.pause();
-
-
-    audioPlayer.src =
-        archivo(
-            nombreAudio
-        );
-
-
-    audioPlayer.load();
-
-
-    if (
-        !sonidoActivo
-    ) {
-
-        return;
-
-    }
-
-
-    audioPlayer.play()
-
-    .then(
-        function () {
-
-            console.log(
-                "▶ Reproduciendo:",
-                nombreAudio
-            );
-
-        }
-    )
-
-    .catch(
-        function(error) {
-
-            console.warn(
-                "El navegador bloqueó el audio:",
-                error
-            );
-
-
-            /*
-            Esto NO necesariamente significa
-            que el archivo no exista.
-
-            Chrome puede exigir una segunda
-            interacción del usuario.
-            */
-
-            status.textContent =
-                `Imagen OK · pulsa Música para escuchar`;
-
-        }
-    );
-
-
-}
-
-
-
-/* ======================================================
-   ERROR REAL DEL ARCHIVO MP3
-====================================================== */
-
-audioPlayer.addEventListener(
-"error",
-function () {
-
-
-    const codigo =
-        audioPlayer.error
-        ? audioPlayer.error.code
-        : "?";
-
-
-    console.error(
-        "ERROR AUDIO:",
-        audioPlayer.src,
-        "Código:",
-        codigo
-    );
-
 
     status.textContent =
-        `❌ No se pudo cargar el audio`;
-
-});
+        datos.imagen;
 
 
-
-/* ======================================================
-   BOTÓN MÚSICA
-====================================================== */
-
-audioButton.addEventListener(
-"click",
-function () {
-
-
-    if (
-        sonidoActivo &&
-        !audioPlayer.paused
-    ) {
-
-
-        sonidoActivo =
-            false;
-
-
-        audioPlayer.pause();
-
-
-        audioButton.textContent =
-            "🔇 Música";
-
-
-    }
-
-    else {
-
-
-        sonidoActivo =
-            true;
-
-
-        const datos =
-            paginas[
-                paginaActual
-            ];
-
-
-        audioPlayer.src =
-            archivo(
-                datos.audio
-            );
-
-
-        audioPlayer.play()
-
-        .then(
-            function () {
-
-                audioButton.textContent =
-                    "🔊 Música";
-
-            }
-        )
-
-        .catch(
-            function(error) {
-
-                console.error(
-                    error
-                );
-
-                status.textContent =
-                    "❌ No fue posible reproducir el MP3";
-
-            }
-        );
-
-    }
-
-});
+}
 
 
 
-/* ======================================================
-   ANTERIOR
-====================================================== */
-
-previousButton.addEventListener(
-"click",
-function () {
-
-
-    if (
-        paginaActual > 0
-    ) {
-
-        mostrarPagina(
-            paginaActual - 1
-        );
-
-    }
-
-});
-
-
-
-/* ======================================================
+/* ==================================================
    SIGUIENTE
-====================================================== */
+================================================== */
+
 
 nextButton.addEventListener(
 "click",
 function () {
 
 
+    if (!albumIniciado) {
+
+        return;
+
+    }
+
+
+
+    /*
+       Estamos en portada.
+       Abrimos fondo_1.
+    */
+
+
     if (
+        paginaActual === -1
+    ) {
+
+
+        if (
+            paginas.length > 0
+        ) {
+
+            mostrarPagina(0);
+
+        }
+
+
+        return;
+
+    }
+
+
+
+    /*
+       Siguiente fotografía.
+    */
+
+
+    if (
+
         paginaActual <
         paginas.length - 1
+
     ) {
+
 
         mostrarPagina(
             paginaActual + 1
@@ -1205,22 +1285,179 @@ function () {
 
     }
 
+
 });
 
 
 
-/* ======================================================
+/* ==================================================
+   ANTERIOR
+================================================== */
+
+
+prevButton.addEventListener(
+"click",
+function () {
+
+
+
+    if (
+        paginaActual > 0
+    ) {
+
+
+        mostrarPagina(
+            paginaActual - 1
+        );
+
+
+        return;
+
+    }
+
+
+
+    /*
+       Volver a portada.
+    */
+
+
+    if (
+        paginaActual === 0
+    ) {
+
+
+        paginaActual =
+            -1;
+
+
+        book.style.display =
+            "none";
+
+
+        cover.style.display =
+            "block";
+
+
+        counter.style.display =
+            "none";
+
+
+        prevButton.style.display =
+            "none";
+
+
+        reproducirAudio(
+            AUDIO_PORTADA
+        );
+
+
+        status.textContent =
+            "Portada";
+
+
+    }
+
+
+});
+
+
+
+/* ==================================================
+   BOTÓN MÚSICA
+================================================== */
+
+
+audioButton.addEventListener(
+"click",
+async function () {
+
+
+
+    /*
+       Si está sonando:
+       pausar.
+    */
+
+
+    if (
+        !audioPlayer.paused
+    ) {
+
+
+        audioPlayer.pause();
+
+
+        audioActivo =
+            false;
+
+
+        audioButton.textContent =
+            "🔇 Música";
+
+
+        return;
+
+    }
+
+
+
+    /*
+       Si está pausado:
+       reanudar.
+    */
+
+
+    audioActivo =
+        true;
+
+
+    try {
+
+
+        await audioPlayer.play();
+
+
+        audioButton.textContent =
+            "🔊 Música";
+
+
+        status.textContent =
+            "▶ Música reproduciéndose";
+
+
+    }
+
+    catch(error) {
+
+
+        console.error(
+            error
+        );
+
+
+        status.textContent =
+            "❌ No se pudo reproducir el MP3";
+
+
+    }
+
+
+});
+
+
+
+/* ==================================================
    TECLADO
-====================================================== */
+================================================== */
+
 
 document.addEventListener(
 "keydown",
 function(event) {
 
 
-    if (
-        !albumAbierto
-    ) {
+    if (!albumIniciado) {
 
         return;
 
@@ -1242,7 +1479,7 @@ function(event) {
         "ArrowLeft"
     ) {
 
-        previousButton.click();
+        prevButton.click();
 
     }
 
@@ -1252,8 +1489,11 @@ function(event) {
 
 
 });
+
+
 </script>
 
 
 </body>
+
 </html>
