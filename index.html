@@ -2,261 +2,466 @@
 <html lang="es">
 
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>Álbum Panorámico Interactivo</title>
-
-
-<!-- PAGE FLIP -->
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-
+<title>Mi Álbum</title>
 
 <style>
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 body {
-
-  background-color: #0a0a0a;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  min-height: 100vh;
-
-  overflow: hidden;
+    background: #080808;
+    color: white;
+    font-family: Georgia, serif;
+    overflow: hidden;
 }
 
 
-/* ===============================
-   CONTENEDOR
-================================ */
+/* =====================================
+   CONTENEDOR GENERAL
+===================================== */
 
-.book-container {
+#album {
 
-  display: flex;
+    width: 100vw;
+    height: 100vh;
 
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  width: 100vw;
-  height: 100vh;
-
-  padding: 20px;
+    position: relative;
 
 }
 
 
-#book {
-
-  box-shadow:
-    0 25px 60px
-    rgba(0,0,0,0.95);
-
-}
-
-
-/* ===============================
-   PÁGINAS
-================================ */
-
-.page {
-
-  background-color: #111;
-
-  overflow: hidden;
-
-  position: relative;
-
-}
-
-
-/* ===============================
+/* =====================================
    PORTADA
-================================ */
+===================================== */
 
-.page-cover {
+#cover {
 
-  background-size: cover;
+    width: min(90vw, 600px);
+    height: min(90vh, 800px);
 
-  background-position: center;
+    position: relative;
 
-  background-repeat: no-repeat;
+    cursor: pointer;
 
-  display: flex;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.9);
 
-  justify-content: center;
+    overflow: hidden;
 
-  align-items: center;
+    border-radius: 4px;
 
-  border: 2px solid #222;
+}
+
+
+#cover img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+.cover-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.25)
+        );
 
 }
 
 
 .cover-title {
 
-  color: #e2c992;
+    background:
+        rgba(0,0,0,.75);
 
-  font-family: Georgia, serif;
+    color:
+        #e4ca91;
 
-  background:
-    rgba(0,0,0,0.80);
+    border:
+        1px solid #e4ca91;
 
-  padding:
-    20px 40px;
+    padding:
+        18px 40px;
 
-  border-radius:
-    8px;
+    letter-spacing:
+        5px;
 
-  border:
-    1px solid #e2c992;
+    text-transform:
+        uppercase;
 
-  text-transform:
-    uppercase;
+    font-size:
+        clamp(20px, 4vw, 38px);
 
-  letter-spacing:
-    4px;
-
-  font-size:
-    1.8rem;
+    text-align:
+        center;
 
 }
 
 
-/* ===============================
+.open-text {
+
+    margin-top:
+        25px;
+
+    background:
+        rgba(0,0,0,.75);
+
+    padding:
+        10px 20px;
+
+    border-radius:
+        30px;
+
+    font-family:
+        Arial, sans-serif;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =====================================
+   LIBRO ABIERTO
+===================================== */
+
+#book {
+
+    display: none;
+
+    width:
+        min(95vw, 1200px);
+
+    height:
+        min(85vh, 760px);
+
+    position: relative;
+
+    background:
+        #111;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.95);
+
+}
+
+
+/* =====================================
    IMAGEN PANORÁMICA
-================================ */
+===================================== */
 
-.shared-bg {
+#panorama {
 
-  background-size:
-    200% 100% !important;
+    width: 100%;
+    height: 100%;
 
-  background-repeat:
-    no-repeat !important;
+    object-fit: contain;
 
-}
+    background:
+        #111;
 
-
-.page-left {
-
-  background-position:
-    left center !important;
-
-  border-right:
-    1px solid
-    rgba(0,0,0,0.4);
+    display: block;
 
 }
 
 
-.page-right {
+/* =====================================
+   UNIÓN CENTRAL DEL LIBRO
+===================================== */
 
-  background-position:
-    right center !important;
+.book-center {
 
-}
+    position: absolute;
 
+    top: 0;
+    bottom: 0;
 
-/* ===============================
-   BOTÓN AUDIO
-================================ */
+    left: 50%;
 
-#audio-button {
+    width: 4px;
 
-  position: fixed;
+    transform:
+        translateX(-50%);
 
-  top: 20px;
-  right: 20px;
+    background:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,.15),
+            rgba(0,0,0,.75),
+            rgba(255,255,255,.08),
+            rgba(0,0,0,.2)
+        );
 
-  z-index: 9999;
-
-  background:
-    rgba(0,0,0,0.85);
-
-  color:
-    #e2c992;
-
-  border:
-    1px solid #e2c992;
-
-  padding:
-    12px 20px;
-
-  border-radius:
-    25px;
-
-  font-family:
-    Georgia, serif;
-
-  cursor: pointer;
+    pointer-events: none;
 
 }
 
 
-#audio-button:hover {
+/* sombra páginas */
 
-  background:
-    #e2c992;
+#book::before {
 
-  color:
-    #111;
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    box-shadow:
+        inset 30px 0 50px rgba(0,0,0,.25),
+        inset -30px 0 50px rgba(0,0,0,.25);
+
+    z-index: 3;
+
+}
+
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.nav-button {
+
+    position: fixed;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 20;
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid rgba(255,255,255,.5);
+
+    background:
+        rgba(0,0,0,.65);
+
+    color: white;
+
+    font-size:
+        30px;
+
+    cursor: pointer;
+
+    display: none;
 
 }
 
 
-/* ===============================
-   INDICADOR
-================================ */
+#prev {
 
-#info {
-
-  position: fixed;
-
-  bottom: 15px;
-  left: 15px;
-
-  color: white;
-
-  font-family:
-    Arial, sans-serif;
-
-  font-size:
-    12px;
-
-  background:
-    rgba(0,0,0,0.75);
-
-  padding:
-    8px 12px;
-
-  border-radius:
-    5px;
-
-  z-index:
-    9999;
+    left: 20px;
 
 }
 
+
+#next {
+
+    right: 20px;
+
+}
+
+
+.nav-button:hover {
+
+    background:
+        rgba(255,255,255,.15);
+
+}
+
+
+/* =====================================
+   INFORMACIÓN
+===================================== */
+
+#counter {
+
+    position: fixed;
+
+    bottom: 18px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        rgba(0,0,0,.75);
+
+    padding:
+        8px 18px;
+
+    border-radius:
+        20px;
+
+    font-family:
+        Arial, sans-serif;
+
+    font-size:
+        13px;
+
+    display: none;
+
+    z-index: 30;
+
+}
+
+
+/* =====================================
+   AUDIO
+===================================== */
+
+#audioControls {
+
+    position: fixed;
+
+    top: 15px;
+    right: 15px;
+
+    z-index: 50;
+
+    display: none;
+
+}
+
+
+#audioControls button {
+
+    background:
+        rgba(0,0,0,.8);
+
+    border:
+        1px solid #e4ca91;
+
+    color:
+        #e4ca91;
+
+    padding:
+        10px 18px;
+
+    border-radius:
+        25px;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================
+   DEBUG
+===================================== */
+
+#status {
+
+    position: fixed;
+
+    bottom: 10px;
+    left: 10px;
+
+    padding:
+        7px 10px;
+
+    background:
+        rgba(0,0,0,.7);
+
+    color:
+        #aaa;
+
+    font-family:
+        Arial, sans-serif;
+
+    font-size:
+        11px;
+
+    z-index:
+        100;
+
+}
+
+
+/* =====================================
+   CELULAR
+===================================== */
+
+@media(max-width: 700px) {
+
+    #book {
+
+        width:
+            100vw;
+
+        height:
+            75vh;
+
+    }
+
+
+    .nav-button {
+
+        width:
+            45px;
+
+        height:
+            45px;
+
+        font-size:
+            24px;
+
+    }
+
+
+    #prev {
+        left: 5px;
+    }
+
+
+    #next {
+        right: 5px;
+    }
+
+}
 
 </style>
 
@@ -266,647 +471,789 @@ body {
 <body>
 
 
-<!-- AUDIO -->
-
-<audio
-  id="audio-player"
-  preload="auto"
-></audio>
+<div id="album">
 
 
-<button id="audio-button">
-  🔊 Activar música
-</button>
+    <!-- ===================================
+         PORTADA
+    ==================================== -->
 
+    <div id="cover">
 
-<div id="info">
-  Cargando álbum...
-</div>
+        <img
+            id="coverImage"
+            alt="Portada del álbum"
+        >
 
+        <div class="cover-overlay">
 
-<!-- LIBRO -->
+            <div class="cover-title">
+                Mi Álbum
+            </div>
 
-<div class="book-container">
+            <div class="open-text">
+                Haz clic para abrir
+            </div>
 
-  <div id="book">
-
-
-    <!-- PORTADA -->
-
-    <div
-      class="page page-cover"
-      data-density="hard"
-      style="
-        background-image:
-        url('portada_general.jpeg');
-      "
-    >
-
-      <h2 class="cover-title">
-        Mi Álbum
-      </h2>
+        </div>
 
     </div>
 
 
-  </div>
 
+    <!-- ===================================
+         LIBRO
+    ==================================== -->
+
+    <div id="book">
+
+        <img
+            id="panorama"
+            alt="Fotografía del álbum"
+        >
+
+        <div class="book-center"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- NAVEGACIÓN -->
+
+<button
+    id="prev"
+    class="nav-button"
+>
+    ‹
+</button>
+
+
+<button
+    id="next"
+    class="nav-button"
+>
+    ›
+</button>
+
+
+
+<!-- AUDIO -->
+
+<audio
+    id="audioPlayer"
+    preload="metadata"
+></audio>
+
+
+<div id="audioControls">
+
+    <button id="audioButton">
+        🔊 Música
+    </button>
+
+</div>
+
+
+
+<!-- CONTADOR -->
+
+<div id="counter"></div>
+
+
+
+<!-- DIAGNÓSTICO -->
+
+<div id="status">
+    Iniciando...
 </div>
 
 
 
 <script>
 
-
 document.addEventListener(
-  "DOMContentLoaded",
-  function () {
+"DOMContentLoaded",
+async function () {
 
 
-    /* =====================================
-       CONFIGURACIÓN
+/* ======================================================
+   ELEMENTOS
+====================================================== */
 
-       Cambia este número según
-       la cantidad de fondos/canciones.
-    ===================================== */
+const cover =
+    document.getElementById("cover");
 
-    const TOTAL_CANCIONES = 42;
+const coverImage =
+    document.getElementById("coverImage");
 
+const book =
+    document.getElementById("book");
 
+const panorama =
+    document.getElementById("panorama");
 
-    /* =====================================
-       ELEMENTOS
-    ===================================== */
+const previousButton =
+    document.getElementById("prev");
 
-    const bookElement =
-      document.getElementById(
-        "book"
-      );
+const nextButton =
+    document.getElementById("next");
 
+const counter =
+    document.getElementById("counter");
 
-    const audioPlayer =
-      document.getElementById(
-        "audio-player"
-      );
+const audioPlayer =
+    document.getElementById("audioPlayer");
 
+const audioButton =
+    document.getElementById("audioButton");
 
-    const audioButton =
-      document.getElementById(
-        "audio-button"
-      );
+const audioControls =
+    document.getElementById("audioControls");
 
-
-    const info =
-      document.getElementById(
-        "info"
-      );
-
-
-
-    /* =====================================
-       LISTA AUTOMÁTICA
-
-       YA NO USA CARPETAS
-    ===================================== */
-
-    const listaCanciones = [];
-
-
-    for (
-      let i = 1;
-      i <= TOTAL_CANCIONES;
-      i++
-    ) {
-
-      listaCanciones.push({
-
-        img:
-          `fondo_${i}.jpeg`,
-
-        audio:
-          `cancion_${i}.mp3`
-
-      });
-
-    }
+const status =
+    document.getElementById("status");
 
 
 
-    /* =====================================
-       CREAR PÁGINAS
-    ===================================== */
+/* ======================================================
+   EVITAR CACHÉ DE GITHUB DURANTE LAS PRUEBAS
+====================================================== */
 
-    listaCanciones.forEach(
-      function(item, index) {
-
-
-        /* PÁGINA IZQUIERDA */
-
-        const izquierda =
-          document.createElement(
-            "div"
-          );
+const version =
+    Date.now();
 
 
-        izquierda.className =
-          "page shared-bg page-left";
+function archivo(nombre) {
 
-
-        izquierda.style.backgroundImage =
-          `url("${item.img}")`;
-
-
-
-        /* PÁGINA DERECHA */
-
-        const derecha =
-          document.createElement(
-            "div"
-          );
-
-
-        derecha.className =
-          "page shared-bg page-right";
-
-
-        derecha.style.backgroundImage =
-          `url("${item.img}")`;
-
-
-
-        bookElement.appendChild(
-          izquierda
+    const url =
+        new URL(
+            nombre,
+            document.baseURI
         );
 
+    url.searchParams.set(
+        "v",
+        version
+    );
 
-        bookElement.appendChild(
-          derecha
-        );
+    return url.href;
 
-
-        /* comprobar imagen */
-
-        const prueba =
-          new Image();
+}
 
 
-        prueba.onload =
-          function() {
 
-            console.log(
-              "✓ Imagen encontrada:",
-              item.img
-            );
+/* ======================================================
+   PORTADA
 
-          };
+   Busca exactamente:
 
+   portada_general.jpeg
+====================================================== */
 
-        prueba.onerror =
-          function() {
-
-            console.error(
-              "✗ Imagen NO encontrada:",
-              item.img
-            );
-
-          };
-
-
-        prueba.src =
-          item.img;
-
-
-      }
+coverImage.src =
+    archivo(
+        "portada_general.jpeg"
     );
 
 
+coverImage.onload =
+function () {
 
-    /* =====================================
-       CONTRAPORTADA
-    ===================================== */
+    status.textContent =
+        "✓ portada_general.jpeg encontrada";
 
-    const trasera =
-      document.createElement(
-        "div"
-      );
+};
 
 
-    trasera.className =
-      "page page-cover";
+coverImage.onerror =
+function () {
 
+    status.textContent =
+        "❌ No se encontró portada_general.jpeg";
 
-    trasera.setAttribute(
-      "data-density",
-      "hard"
+    console.error(
+        "ERROR PORTADA:",
+        coverImage.src
     );
 
-
-    trasera.style.backgroundImage =
-      "url('trasera_general.jpg')";
-
-
-    trasera.innerHTML =
-      '<h2 class="cover-title">Fin</h2>';
-
-
-    bookElement.appendChild(
-      trasera
-    );
+};
 
 
 
-    /* =====================================
-       COMPROBAR PAGE FLIP
-    ===================================== */
+/* ======================================================
+   DETECTAR FONDOS AUTOMÁTICAMENTE
 
-    if (
-      typeof St ===
-      "undefined"
-    ) {
+   Busca:
 
-      console.error(
-        "PageFlip no está cargado."
-      );
+   fondo_1.jpeg
+   fondo_2.jpeg
+   fondo_3.jpeg
+   ...
 
+   Cuando encuentra el primero que no existe,
+   deja de buscar.
+====================================================== */
 
-      info.textContent =
-        "ERROR: PageFlip no cargó";
-
-
-      return;
-
-    }
+const paginas = [];
 
 
+function comprobarImagen(
+    numero
+) {
 
-    /* =====================================
-       CREAR LIBRO
-    ===================================== */
+    return new Promise(
+        function(resolve) {
 
-    const pageFlip =
-      new St.PageFlip(
 
-        bookElement,
+            const nombre =
+                `fondo_${numero}.jpeg`;
 
-        {
 
-          width:
-            480,
+            const imagen =
+                new Image();
 
-          height:
-            640,
 
-          size:
-            "stretch",
+            imagen.onload =
+            function () {
 
-          minWidth:
-            280,
+                resolve(
+                    true
+                );
 
-          maxWidth:
-            480,
+            };
 
-          minHeight:
-            373,
 
-          maxHeight:
-            640,
+            imagen.onerror =
+            function () {
 
-          showCover:
-            true,
+                resolve(
+                    false
+                );
 
-          usePortrait:
-            true,
+            };
 
-          autoSize:
-            true,
 
-          maxShadowOpacity:
-            0.6,
-
-          flippingTime:
-            700,
-
-          mobileScrollSupport:
-            false
+            imagen.src =
+                archivo(nombre);
 
         }
-
-      );
-
-
-
-    /* =====================================
-       CARGAR PÁGINAS
-    ===================================== */
-
-    const paginas =
-      document.querySelectorAll(
-        "#book .page"
-      );
-
-
-    pageFlip.loadFromHTML(
-      paginas
     );
 
-
-    info.textContent =
-      "Álbum cargado";
+}
 
 
 
-    /* =====================================
-       AUDIO
-    ===================================== */
+/* ======================================================
+   ESCANEAR HASTA 200 POSIBLES FONDOS
+====================================================== */
 
-    let audioActivado =
-      false;
-
-
-    let cancionActual =
-      -1;
+status.textContent =
+    "Buscando fotografías...";
 
 
-
-    /* =====================================
-       ACTIVAR AUDIO
-    ===================================== */
-
-    audioButton.addEventListener(
-      "click",
-      async function() {
+for (
+    let i = 1;
+    i <= 200;
+    i++
+) {
 
 
-        audioActivado =
-          true;
+    const existe =
+        await comprobarImagen(i);
 
 
-        audioButton.textContent =
-          "🔊 Música activada";
-
+    if (!existe) {
 
         /*
-          Si ya está en una página
-          interior reproducimos
-          su canción.
+        Detenemos la búsqueda
+        en el primer número que falte.
         */
 
-        const pagina =
-          pageFlip.getCurrentPageIndex();
-
-
-        reproducirPorPagina(
-          pagina
-        );
-
-
-      }
-    );
-
-
-
-    /* =====================================
-       REPRODUCIR
-    ===================================== */
-
-    function reproducir(
-      indice
-    ) {
-
-
-      if (
-        !audioActivado
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        indice < 0 ||
-        indice >=
-        listaCanciones.length
-      ) {
-
-        audioPlayer.pause();
-
-        return;
-
-      }
-
-
-      /*
-        Evitar reiniciar canción
-        al movernos entre las dos
-        páginas de la misma imagen.
-      */
-
-      if (
-        indice ===
-        cancionActual
-      ) {
-
-        return;
-
-      }
-
-
-      cancionActual =
-        indice;
-
-
-      const cancion =
-        listaCanciones[
-          indice
-        ];
-
-
-      audioPlayer.pause();
-
-
-      audioPlayer.src =
-        cancion.audio;
-
-
-      audioPlayer.currentTime =
-        0;
-
-
-
-      audioPlayer.play()
-
-        .then(
-          function() {
-
-            console.log(
-              "▶ Reproduciendo:",
-              cancion.audio
-            );
-
-
-            info.textContent =
-              `Canción ${indice + 1}`;
-
-          }
-        )
-
-        .catch(
-          function(error) {
-
-            console.error(
-              "No se pudo reproducir:",
-              cancion.audio,
-              error
-            );
-
-
-            info.textContent =
-              "No se encontró " +
-              cancion.audio;
-
-          }
-        );
-
-
+        break;
 
     }
 
 
+    paginas.push({
 
-    /* =====================================
-       CALCULAR CANCIÓN
-       SEGÚN PÁGINA
-    ===================================== */
+        numero:
+            i,
 
-    function reproducirPorPagina(
-      numeroPagina
-    ) {
+        imagen:
+            `fondo_${i}.jpeg`,
 
+        audio:
+            `cancion_${i}.mp3`
 
-      /* PORTADA */
-
-      if (
-        numeroPagina === 0
-      ) {
-
-        audioPlayer.pause();
-
-        cancionActual =
-          -1;
-
-        info.textContent =
-          "Portada";
-
-        return;
-
-      }
+    });
 
 
-
-      /* CONTRAPORTADA */
-
-      if (
-        numeroPagina >=
-        pageFlip.getPageCount() - 1
-      ) {
-
-        audioPlayer.pause();
-
-        cancionActual =
-          -1;
-
-        info.textContent =
-          "Fin";
-
-        return;
-
-      }
+}
 
 
-
-      /*
-        Cada fotografía ocupa
-        dos páginas.
-
-        Página 1 y 2 = canción 1
-        Página 3 y 4 = canción 2
-        etc.
-      */
-
-      const indice =
-        Math.floor(
-          (
-            numeroPagina - 1
-          ) / 2
-        );
-
-
-      reproducir(
-        indice
-      );
-
-
-
-    }
-
-
-
-    /* =====================================
-       CUANDO CAMBIA LA PÁGINA
-    ===================================== */
-
-    pageFlip.on(
-      "flip",
-      function(evento) {
-
-
-        const pagina =
-          evento.data;
-
-
-        console.log(
-          "Página:",
-          pagina
-        );
-
-
-        reproducirPorPagina(
-          pagina
-        );
-
-
-      }
-    );
-
-
-
-    /* =====================================
-       ERROR AUDIO
-    ===================================== */
-
-    audioPlayer.addEventListener(
-      "error",
-      function() {
-
-
-        console.error(
-          "Archivo de audio no encontrado:",
-          audioPlayer.src
-        );
-
-
-      }
-    );
-
-
-  }
+console.log(
+    "Páginas detectadas:",
+    paginas
 );
 
 
+
+if (
+    paginas.length === 0
+) {
+
+    status.textContent =
+        "❌ No se encontró fondo_1.jpeg";
+
+}
+
+else {
+
+    status.textContent =
+        `✓ ${paginas.length} fotografía(s) encontrada(s)`;
+
+}
+
+
+
+/* ======================================================
+   ESTADO DEL ÁLBUM
+====================================================== */
+
+let paginaActual =
+    0;
+
+
+let albumAbierto =
+    false;
+
+
+let sonidoActivo =
+    true;
+
+
+
+/* ======================================================
+   ABRIR ÁLBUM
+
+   Este clic también permite que el navegador
+   autorice posteriormente la reproducción de audio.
+====================================================== */
+
+cover.addEventListener(
+"click",
+function () {
+
+
+    if (
+        paginas.length === 0
+    ) {
+
+        alert(
+            "No se encontró fondo_1.jpeg"
+        );
+
+        return;
+
+    }
+
+
+    albumAbierto =
+        true;
+
+
+    cover.style.display =
+        "none";
+
+
+    book.style.display =
+        "block";
+
+
+    previousButton.style.display =
+        "block";
+
+
+    nextButton.style.display =
+        "block";
+
+
+    counter.style.display =
+        "block";
+
+
+    audioControls.style.display =
+        "block";
+
+
+    mostrarPagina(
+        0
+    );
+
+
+});
+
+
+
+/* ======================================================
+   MOSTRAR PÁGINA
+====================================================== */
+
+function mostrarPagina(
+    indice
+) {
+
+
+    if (
+        indice < 0 ||
+        indice >= paginas.length
+    ) {
+
+        return;
+
+    }
+
+
+    paginaActual =
+        indice;
+
+
+    const datos =
+        paginas[
+            paginaActual
+        ];
+
+
+    /* IMAGEN */
+
+    panorama.src =
+        archivo(
+            datos.imagen
+        );
+
+
+    panorama.onload =
+    function () {
+
+        status.textContent =
+            `✓ ${datos.imagen}`;
+
+    };
+
+
+    panorama.onerror =
+    function () {
+
+        status.textContent =
+            `❌ Error cargando ${datos.imagen}`;
+
+    };
+
+
+    /* CONTADOR */
+
+    counter.textContent =
+        `${paginaActual + 1} / ${paginas.length}`;
+
+
+    /* AUDIO */
+
+    reproducirAudio(
+        datos.audio
+    );
+
+
+    /* BOTONES */
+
+    previousButton.style.opacity =
+        paginaActual === 0
+        ? "0.3"
+        : "1";
+
+
+    nextButton.style.opacity =
+        paginaActual ===
+        paginas.length - 1
+        ? "0.3"
+        : "1";
+
+
+}
+
+
+
+/* ======================================================
+   AUDIO
+====================================================== */
+
+function reproducirAudio(
+    nombreAudio
+) {
+
+
+    audioPlayer.pause();
+
+
+    audioPlayer.src =
+        archivo(
+            nombreAudio
+        );
+
+
+    audioPlayer.load();
+
+
+    if (
+        !sonidoActivo
+    ) {
+
+        return;
+
+    }
+
+
+    audioPlayer.play()
+
+    .then(
+        function () {
+
+            console.log(
+                "▶ Reproduciendo:",
+                nombreAudio
+            );
+
+        }
+    )
+
+    .catch(
+        function(error) {
+
+            console.warn(
+                "El navegador bloqueó el audio:",
+                error
+            );
+
+
+            /*
+            Esto NO necesariamente significa
+            que el archivo no exista.
+
+            Chrome puede exigir una segunda
+            interacción del usuario.
+            */
+
+            status.textContent =
+                `Imagen OK · pulsa Música para escuchar`;
+
+        }
+    );
+
+
+}
+
+
+
+/* ======================================================
+   ERROR REAL DEL ARCHIVO MP3
+====================================================== */
+
+audioPlayer.addEventListener(
+"error",
+function () {
+
+
+    const codigo =
+        audioPlayer.error
+        ? audioPlayer.error.code
+        : "?";
+
+
+    console.error(
+        "ERROR AUDIO:",
+        audioPlayer.src,
+        "Código:",
+        codigo
+    );
+
+
+    status.textContent =
+        `❌ No se pudo cargar el audio`;
+
+});
+
+
+
+/* ======================================================
+   BOTÓN MÚSICA
+====================================================== */
+
+audioButton.addEventListener(
+"click",
+function () {
+
+
+    if (
+        sonidoActivo &&
+        !audioPlayer.paused
+    ) {
+
+
+        sonidoActivo =
+            false;
+
+
+        audioPlayer.pause();
+
+
+        audioButton.textContent =
+            "🔇 Música";
+
+
+    }
+
+    else {
+
+
+        sonidoActivo =
+            true;
+
+
+        const datos =
+            paginas[
+                paginaActual
+            ];
+
+
+        audioPlayer.src =
+            archivo(
+                datos.audio
+            );
+
+
+        audioPlayer.play()
+
+        .then(
+            function () {
+
+                audioButton.textContent =
+                    "🔊 Música";
+
+            }
+        )
+
+        .catch(
+            function(error) {
+
+                console.error(
+                    error
+                );
+
+                status.textContent =
+                    "❌ No fue posible reproducir el MP3";
+
+            }
+        );
+
+    }
+
+});
+
+
+
+/* ======================================================
+   ANTERIOR
+====================================================== */
+
+previousButton.addEventListener(
+"click",
+function () {
+
+
+    if (
+        paginaActual > 0
+    ) {
+
+        mostrarPagina(
+            paginaActual - 1
+        );
+
+    }
+
+});
+
+
+
+/* ======================================================
+   SIGUIENTE
+====================================================== */
+
+nextButton.addEventListener(
+"click",
+function () {
+
+
+    if (
+        paginaActual <
+        paginas.length - 1
+    ) {
+
+        mostrarPagina(
+            paginaActual + 1
+        );
+
+    }
+
+});
+
+
+
+/* ======================================================
+   TECLADO
+====================================================== */
+
+document.addEventListener(
+"keydown",
+function(event) {
+
+
+    if (
+        !albumAbierto
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        event.key ===
+        "ArrowRight"
+    ) {
+
+        nextButton.click();
+
+    }
+
+
+    if (
+        event.key ===
+        "ArrowLeft"
+    ) {
+
+        previousButton.click();
+
+    }
+
+
+});
+
+
+
+});
 </script>
 
 
 </body>
-
 </html>
