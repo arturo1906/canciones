@@ -1,183 +1,912 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Álbum Panorámico Interactivo</title>
-  
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      background-color: #0a0a0a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-    }
 
-    .book-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 90vh;
-      max-height: 750px;
-    }
+<meta charset="UTF-8">
 
-    #book {
-      box-shadow: 0 25px 60px rgba(0,0,0,0.95);
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-    .page {
-      background-color: #111;
-      overflow: hidden;
-      position: relative;
-    }
+<title>Álbum Panorámico Interactivo</title>
 
-    .page-cover {
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 2px solid #222;
-    }
-    
-    .cover-title {
-      color: #e2c992;
-      font-family: 'Georgia', serif;
-      background: rgba(0,0,0,0.8);
-      padding: 20px 40px;
-      border-radius: 8px;
-      border: 1px solid #e2c992;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      font-size: 1.8rem;
-    }
 
-    .shared-bg {
-      background-size: 200% 100% !important;
-      background-repeat: no-repeat !important;
-    }
+<!-- PAGE FLIP -->
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 
-    .page-left {
-      background-position: left center !important;
-      border-right: 1px solid rgba(0, 0, 0, 0.4);
-    }
 
-    .page-right {
-      background-position: right center !important;
-    }
-  </style>
+<style>
 
-  <!-- Librería Page-Flip -->
-  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.js"></script>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+
+  background-color: #0a0a0a;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+}
+
+
+/* ===============================
+   CONTENEDOR
+================================ */
+
+.book-container {
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  padding: 20px;
+
+}
+
+
+#book {
+
+  box-shadow:
+    0 25px 60px
+    rgba(0,0,0,0.95);
+
+}
+
+
+/* ===============================
+   PÁGINAS
+================================ */
+
+.page {
+
+  background-color: #111;
+
+  overflow: hidden;
+
+  position: relative;
+
+}
+
+
+/* ===============================
+   PORTADA
+================================ */
+
+.page-cover {
+
+  background-size: cover;
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border: 2px solid #222;
+
+}
+
+
+.cover-title {
+
+  color: #e2c992;
+
+  font-family: Georgia, serif;
+
+  background:
+    rgba(0,0,0,0.80);
+
+  padding:
+    20px 40px;
+
+  border-radius:
+    8px;
+
+  border:
+    1px solid #e2c992;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    4px;
+
+  font-size:
+    1.8rem;
+
+}
+
+
+/* ===============================
+   IMAGEN PANORÁMICA
+================================ */
+
+.shared-bg {
+
+  background-size:
+    200% 100% !important;
+
+  background-repeat:
+    no-repeat !important;
+
+}
+
+
+.page-left {
+
+  background-position:
+    left center !important;
+
+  border-right:
+    1px solid
+    rgba(0,0,0,0.4);
+
+}
+
+
+.page-right {
+
+  background-position:
+    right center !important;
+
+}
+
+
+/* ===============================
+   BOTÓN AUDIO
+================================ */
+
+#audio-button {
+
+  position: fixed;
+
+  top: 20px;
+  right: 20px;
+
+  z-index: 9999;
+
+  background:
+    rgba(0,0,0,0.85);
+
+  color:
+    #e2c992;
+
+  border:
+    1px solid #e2c992;
+
+  padding:
+    12px 20px;
+
+  border-radius:
+    25px;
+
+  font-family:
+    Georgia, serif;
+
+  cursor: pointer;
+
+}
+
+
+#audio-button:hover {
+
+  background:
+    #e2c992;
+
+  color:
+    #111;
+
+}
+
+
+/* ===============================
+   INDICADOR
+================================ */
+
+#info {
+
+  position: fixed;
+
+  bottom: 15px;
+  left: 15px;
+
+  color: white;
+
+  font-family:
+    Arial, sans-serif;
+
+  font-size:
+    12px;
+
+  background:
+    rgba(0,0,0,0.75);
+
+  padding:
+    8px 12px;
+
+  border-radius:
+    5px;
+
+  z-index:
+    9999;
+
+}
+
+
+</style>
+
 </head>
+
+
 <body>
 
-  <audio id="audio-player" style="display: none;"></audio>
 
-  <div class="book-container">
-    <div id="book">
-      
-      <!-- PORTADA INICIAL -->
-      <div class="page page-cover" data-density="hard" style="background-image: url('img/portada_general.jpeg');">
-        <h2 class="cover-title">Mi Álbum</h2>
-      </div>
+<!-- AUDIO -->
 
-      <!-- PÁGINAS INTERIORES DENTRO DE HTML -->
+<audio
+  id="audio-player"
+  preload="auto"
+></audio>
+
+
+<button id="audio-button">
+  🔊 Activar música
+</button>
+
+
+<div id="info">
+  Cargando álbum...
+</div>
+
+
+<!-- LIBRO -->
+
+<div class="book-container">
+
+  <div id="book">
+
+
+    <!-- PORTADA -->
+
+    <div
+      class="page page-cover"
+      data-density="hard"
+      style="
+        background-image:
+        url('portada_general.jpeg');
+      "
+    >
+
+      <h2 class="cover-title">
+        Mi Álbum
+      </h2>
 
     </div>
+
+
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Lista de canciones / imágenes manuales
-      const listaCanciones = [
-        { audio: "audio/cancion_1.mp3", img: "img/fondo_1.jpeg" },
-        { audio: "audio/cancion_2.mp3", img: "img/fondo_2.jpeg" },
-        { audio: "audio/cancion_3.mp3", img: "img/fondo_3.jpeg" }
-      ];
+</div>
 
-      // Bucle de relleno ajustado a la extensión correcta (.jpeg o .jpg según tu carpeta)
-      const totalPaginasDeseadas = 42;
-      for (let i = listaCanciones.length; i < totalPaginasDeseadas; i++) {
-        listaCanciones.push({
-          audio: `audio/cancion_${i+1}.mp3`,
-          img: `img/fondo_${i+1}.jpeg` // Asegúrate de que todas usen la misma extensión
-        });
-      }
 
-      const bookElement = document.getElementById('book');
-      const audioPlayer = document.getElementById('audio-player');
 
-      // Generación de la estructura del libro
-      listaCanciones.forEach((item) => {
-        const pLeft = document.createElement('div');
-        pLeft.className = 'page shared-bg page-left';
-        pLeft.style.backgroundImage = `url('${item.img}')`;
-        
-        const pRight = document.createElement('div');
-        pRight.className = 'page shared-bg page-right';
-        pRight.style.backgroundImage = `url('${item.img}')`;
+<script>
 
-        bookElement.appendChild(pLeft);
-        bookElement.appendChild(pRight);
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+
+    /* =====================================
+       CONFIGURACIÓN
+
+       Cambia este número según
+       la cantidad de fondos/canciones.
+    ===================================== */
+
+    const TOTAL_CANCIONES = 42;
+
+
+
+    /* =====================================
+       ELEMENTOS
+    ===================================== */
+
+    const bookElement =
+      document.getElementById(
+        "book"
+      );
+
+
+    const audioPlayer =
+      document.getElementById(
+        "audio-player"
+      );
+
+
+    const audioButton =
+      document.getElementById(
+        "audio-button"
+      );
+
+
+    const info =
+      document.getElementById(
+        "info"
+      );
+
+
+
+    /* =====================================
+       LISTA AUTOMÁTICA
+
+       YA NO USA CARPETAS
+    ===================================== */
+
+    const listaCanciones = [];
+
+
+    for (
+      let i = 1;
+      i <= TOTAL_CANCIONES;
+      i++
+    ) {
+
+      listaCanciones.push({
+
+        img:
+          `fondo_${i}.jpeg`,
+
+        audio:
+          `cancion_${i}.mp3`
+
       });
 
-      // CONTRAPORTADA FINAL
-      const pBack = document.createElement('div');
-      pBack.className = 'page page-cover';
-      pBack.setAttribute('data-density', 'hard');
-      pBack.style.backgroundImage = "url('img/trasera_general.jpg')";
-      pBack.innerHTML = `<h2 class="cover-title">Fin</h2>`;
-      bookElement.appendChild(pBack);
+    }
 
-      // Inicializar PageFlip únicamente cuando la librería esté lista
-      if (typeof St !== 'undefined' && St.PageFlip) {
-        const pageFlip = new St.PageFlip(bookElement, {
-          width: 480,
-          height: 640,
-          size: "fixed",
-          showCover: true,
-          maxShadowOpacity: 0.6,
-        });
 
-        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
-        let cancionActualIndex = -1;
+    /* =====================================
+       CREAR PÁGINAS
+    ===================================== */
 
-        pageFlip.on('flip', (e) => {
-          const nPagina = e.data;
+    listaCanciones.forEach(
+      function(item, index) {
 
-          if (nPagina === 0 || nPagina >= (listaCanciones.length * 2) + 1) {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-            cancionActualIndex = -1;
-            return;
-          }
 
-          const indiceCalculado = Math.floor((nPagina - 1) / 2);
+        /* PÁGINA IZQUIERDA */
 
-          if (indiceCalculado !== cancionActualIndex) {
-            cancionActualIndex = indiceCalculado;
-            const datosCancion = listaCanciones[cancionActualIndex];
-            
-            if (datosCancion) {
-              audioPlayer.src = datosCancion.audio;
-              audioPlayer.currentTime = 0;
-              audioPlayer.play().catch((err) => {
-                console.warn("Autoplay bloqueado hasta la primera interacción del usuario:", err);
-              });
-            }
-          }
-        });
-      } else {
-        console.error("La librería PageFlip no se pudo cargar desde el CDN CDNJS/JSDelivr.");
+        const izquierda =
+          document.createElement(
+            "div"
+          );
+
+
+        izquierda.className =
+          "page shared-bg page-left";
+
+
+        izquierda.style.backgroundImage =
+          `url("${item.img}")`;
+
+
+
+        /* PÁGINA DERECHA */
+
+        const derecha =
+          document.createElement(
+            "div"
+          );
+
+
+        derecha.className =
+          "page shared-bg page-right";
+
+
+        derecha.style.backgroundImage =
+          `url("${item.img}")`;
+
+
+
+        bookElement.appendChild(
+          izquierda
+        );
+
+
+        bookElement.appendChild(
+          derecha
+        );
+
+
+        /* comprobar imagen */
+
+        const prueba =
+          new Image();
+
+
+        prueba.onload =
+          function() {
+
+            console.log(
+              "✓ Imagen encontrada:",
+              item.img
+            );
+
+          };
+
+
+        prueba.onerror =
+          function() {
+
+            console.error(
+              "✗ Imagen NO encontrada:",
+              item.img
+            );
+
+          };
+
+
+        prueba.src =
+          item.img;
+
+
       }
-    });
-  </script>
+    );
+
+
+
+    /* =====================================
+       CONTRAPORTADA
+    ===================================== */
+
+    const trasera =
+      document.createElement(
+        "div"
+      );
+
+
+    trasera.className =
+      "page page-cover";
+
+
+    trasera.setAttribute(
+      "data-density",
+      "hard"
+    );
+
+
+    trasera.style.backgroundImage =
+      "url('trasera_general.jpg')";
+
+
+    trasera.innerHTML =
+      '<h2 class="cover-title">Fin</h2>';
+
+
+    bookElement.appendChild(
+      trasera
+    );
+
+
+
+    /* =====================================
+       COMPROBAR PAGE FLIP
+    ===================================== */
+
+    if (
+      typeof St ===
+      "undefined"
+    ) {
+
+      console.error(
+        "PageFlip no está cargado."
+      );
+
+
+      info.textContent =
+        "ERROR: PageFlip no cargó";
+
+
+      return;
+
+    }
+
+
+
+    /* =====================================
+       CREAR LIBRO
+    ===================================== */
+
+    const pageFlip =
+      new St.PageFlip(
+
+        bookElement,
+
+        {
+
+          width:
+            480,
+
+          height:
+            640,
+
+          size:
+            "stretch",
+
+          minWidth:
+            280,
+
+          maxWidth:
+            480,
+
+          minHeight:
+            373,
+
+          maxHeight:
+            640,
+
+          showCover:
+            true,
+
+          usePortrait:
+            true,
+
+          autoSize:
+            true,
+
+          maxShadowOpacity:
+            0.6,
+
+          flippingTime:
+            700,
+
+          mobileScrollSupport:
+            false
+
+        }
+
+      );
+
+
+
+    /* =====================================
+       CARGAR PÁGINAS
+    ===================================== */
+
+    const paginas =
+      document.querySelectorAll(
+        "#book .page"
+      );
+
+
+    pageFlip.loadFromHTML(
+      paginas
+    );
+
+
+    info.textContent =
+      "Álbum cargado";
+
+
+
+    /* =====================================
+       AUDIO
+    ===================================== */
+
+    let audioActivado =
+      false;
+
+
+    let cancionActual =
+      -1;
+
+
+
+    /* =====================================
+       ACTIVAR AUDIO
+    ===================================== */
+
+    audioButton.addEventListener(
+      "click",
+      async function() {
+
+
+        audioActivado =
+          true;
+
+
+        audioButton.textContent =
+          "🔊 Música activada";
+
+
+        /*
+          Si ya está en una página
+          interior reproducimos
+          su canción.
+        */
+
+        const pagina =
+          pageFlip.getCurrentPageIndex();
+
+
+        reproducirPorPagina(
+          pagina
+        );
+
+
+      }
+    );
+
+
+
+    /* =====================================
+       REPRODUCIR
+    ===================================== */
+
+    function reproducir(
+      indice
+    ) {
+
+
+      if (
+        !audioActivado
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        indice < 0 ||
+        indice >=
+        listaCanciones.length
+      ) {
+
+        audioPlayer.pause();
+
+        return;
+
+      }
+
+
+      /*
+        Evitar reiniciar canción
+        al movernos entre las dos
+        páginas de la misma imagen.
+      */
+
+      if (
+        indice ===
+        cancionActual
+      ) {
+
+        return;
+
+      }
+
+
+      cancionActual =
+        indice;
+
+
+      const cancion =
+        listaCanciones[
+          indice
+        ];
+
+
+      audioPlayer.pause();
+
+
+      audioPlayer.src =
+        cancion.audio;
+
+
+      audioPlayer.currentTime =
+        0;
+
+
+
+      audioPlayer.play()
+
+        .then(
+          function() {
+
+            console.log(
+              "▶ Reproduciendo:",
+              cancion.audio
+            );
+
+
+            info.textContent =
+              `Canción ${indice + 1}`;
+
+          }
+        )
+
+        .catch(
+          function(error) {
+
+            console.error(
+              "No se pudo reproducir:",
+              cancion.audio,
+              error
+            );
+
+
+            info.textContent =
+              "No se encontró " +
+              cancion.audio;
+
+          }
+        );
+
+
+
+    }
+
+
+
+    /* =====================================
+       CALCULAR CANCIÓN
+       SEGÚN PÁGINA
+    ===================================== */
+
+    function reproducirPorPagina(
+      numeroPagina
+    ) {
+
+
+      /* PORTADA */
+
+      if (
+        numeroPagina === 0
+      ) {
+
+        audioPlayer.pause();
+
+        cancionActual =
+          -1;
+
+        info.textContent =
+          "Portada";
+
+        return;
+
+      }
+
+
+
+      /* CONTRAPORTADA */
+
+      if (
+        numeroPagina >=
+        pageFlip.getPageCount() - 1
+      ) {
+
+        audioPlayer.pause();
+
+        cancionActual =
+          -1;
+
+        info.textContent =
+          "Fin";
+
+        return;
+
+      }
+
+
+
+      /*
+        Cada fotografía ocupa
+        dos páginas.
+
+        Página 1 y 2 = canción 1
+        Página 3 y 4 = canción 2
+        etc.
+      */
+
+      const indice =
+        Math.floor(
+          (
+            numeroPagina - 1
+          ) / 2
+        );
+
+
+      reproducir(
+        indice
+      );
+
+
+
+    }
+
+
+
+    /* =====================================
+       CUANDO CAMBIA LA PÁGINA
+    ===================================== */
+
+    pageFlip.on(
+      "flip",
+      function(evento) {
+
+
+        const pagina =
+          evento.data;
+
+
+        console.log(
+          "Página:",
+          pagina
+        );
+
+
+        reproducirPorPagina(
+          pagina
+        );
+
+
+      }
+    );
+
+
+
+    /* =====================================
+       ERROR AUDIO
+    ===================================== */
+
+    audioPlayer.addEventListener(
+      "error",
+      function() {
+
+
+        console.error(
+          "Archivo de audio no encontrado:",
+          audioPlayer.src
+        );
+
+
+      }
+    );
+
+
+  }
+);
+
+
+</script>
+
+
 </body>
+
 </html>
