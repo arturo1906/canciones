@@ -1,471 +1,857 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
 <title>Mi Álbum</title>
 
+
 <style>
 
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
+
 
 body {
-  background: #080808;
-  color: white;
-  font-family: Georgia, serif;
-  overflow: hidden;
+
+    background: #080808;
+
+    color: white;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    overflow: hidden;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    ESCENARIO
-========================================== */
+========================================================= */
 
 #stage {
-  width: 100vw;
-  height: 100dvh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100vw;
+    height: 100vh;
 
-  padding:
-    max(10px, env(safe-area-inset-top))
-    max(10px, env(safe-area-inset-right))
-    max(10px, env(safe-area-inset-bottom))
-    max(10px, env(safe-area-inset-left));
+    width: 100dvw;
+    height: 100dvh;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding:
+
+        max(
+            10px,
+            env(safe-area-inset-top)
+        )
+
+        max(
+            10px,
+            env(safe-area-inset-right)
+        )
+
+        max(
+            10px,
+            env(safe-area-inset-bottom)
+        )
+
+        max(
+            10px,
+            env(safe-area-inset-left)
+        );
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    PORTADA
-========================================== */
+========================================================= */
 
 #cover {
-  position: relative;
 
-  width: min(410px, 88vw);
-  height: min(720px, 82dvh);
+    position: relative;
 
-  background:
-    url("./portada_general.jpeg")
-    center / cover
-    no-repeat;
+    width:
+        min(
+            410px,
+            88vw
+        );
 
-  border-radius: 8px;
-  overflow: hidden;
+    height:
+        min(
+            720px,
+            82dvh
+        );
 
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.75);
+    background-image:
+        url("./portada_general.jpeg");
+
+    background-size:
+        cover;
+
+    background-position:
+        center;
+
+    background-repeat:
+        no-repeat;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        8px;
+
+    box-shadow:
+
+        0 20px 40px
+        rgba(0,0,0,.50),
+
+        0 40px 100px
+        rgba(0,0,0,.75);
+
 }
+
+
+
+/* degradado inferior */
 
 #cover::after {
-  content: "";
 
-  position: absolute;
-  inset: 0;
+    content: "";
 
-  background:
-    linear-gradient(
-      transparent 50%,
-      rgba(0,0,0,.58)
-    );
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+
+            rgba(0,0,0,0)
+            45%,
+
+            rgba(0,0,0,.60)
+            100%
+        );
+
+    pointer-events:
+        none;
+
 }
+
+
+
+/* contenido portada */
 
 .cover-content {
-  position: absolute;
 
-  z-index: 5;
+    position: absolute;
 
-  left: 0;
-  right: 0;
-  bottom: 35px;
+    z-index: 10;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    left: 0;
+    right: 0;
 
-  gap: 15px;
+    bottom: 38px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
 }
+
+
+
+/* título */
 
 .cover-title {
-  padding: 13px 25px;
 
-  border:
-    1px solid #e4ca91;
+    color:
+        #e4ca91;
 
-  background:
-    rgba(0,0,0,.72);
+    background:
+        rgba(0,0,0,.70);
 
-  color:
-    #e4ca91;
+    border:
+        1px solid
+        rgba(228,202,145,.85);
 
-  border-radius: 6px;
+    padding:
+        13px 25px;
 
-  letter-spacing: 3px;
+    border-radius:
+        6px;
 
-  text-transform: uppercase;
+    text-transform:
+        uppercase;
 
-  font-size:
-    clamp(18px, 4vw, 28px);
+    letter-spacing:
+        3px;
+
+    font-size:
+        clamp(
+            18px,
+            4vw,
+            28px
+        );
+
+    text-align:
+        center;
+
 }
 
 
-/* ==========================================
-   BOTÓN INICIAR
-========================================== */
+
+/* botón iniciar */
 
 #startButton {
-  border:
-    1px solid #e4ca91;
 
-  background:
-    rgba(0,0,0,.88);
+    appearance:
+        none;
 
-  color:
-    #e4ca91;
+    border:
+        1px solid
+        #e4ca91;
 
-  border-radius: 40px;
+    background:
+        rgba(0,0,0,.88);
 
-  padding:
-    12px 23px;
+    color:
+        #e4ca91;
 
-  font-size:
-    15px;
+    padding:
+        12px 24px;
 
-  cursor: pointer;
+    border-radius:
+        40px;
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
 }
 
 
-/* ==========================================
+#startButton:active {
+
+    transform:
+        scale(.97);
+
+}
+
+
+
+/* =========================================================
    LIBRO
-========================================== */
+========================================================= */
 
 #book {
-  display: none;
 
-  position: relative;
+    display: none;
 
-  /*
-     En escritorio sigue siendo compacto.
-  */
+    position: relative;
 
-  width: min(620px, 88vw);
-  height: min(760px, 82dvh);
+    /*
+       Proporción bastante cercana
+       a las imágenes verticales.
+    */
 
-  overflow: hidden;
+    width:
+        min(
+            620px,
+            88vw
+        );
 
-  border-radius: 8px;
+    height:
+        min(
+            760px,
+            82dvh
+        );
 
-  background: #151515;
+    background:
+        #151515;
 
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.75);
+    overflow:
+        hidden;
+
+    border-radius:
+        8px;
+
+    box-shadow:
+
+        0 20px 40px
+        rgba(0,0,0,.50),
+
+        0 40px 100px
+        rgba(0,0,0,.75);
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    FONDO DESENFOCADO
-========================================== */
+========================================================= */
 
 #backgroundImage {
-  position: absolute;
 
-  inset: -30px;
+    position:
+        absolute;
 
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    inset:
+        -30px;
 
-  filter: blur(24px);
+    background-size:
+        cover;
 
-  transform: scale(1.08);
+    background-position:
+        center;
 
-  opacity: .55;
+    background-repeat:
+        no-repeat;
+
+    filter:
+        blur(25px);
+
+    transform:
+        scale(1.08);
+
+    opacity:
+        .55;
+
 }
+
+
+
+/* oscurecimiento ligero */
 
 #darkLayer {
-  position: absolute;
 
-  inset: 0;
+    position:
+        absolute;
 
-  background:
-    rgba(0,0,0,.12);
+    inset:
+        0;
 
-  z-index: 1;
+    z-index:
+        1;
+
+    background:
+        rgba(0,0,0,.10);
+
+    pointer-events:
+        none;
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    IMAGEN PRINCIPAL
 
-   97% DE ALTURA
-========================================== */
+   SE VE COMPLETA
+   NO SE RECORTA
+========================================================= */
 
 #mainImage {
-  position: absolute;
 
-  z-index: 2;
+    position:
+        absolute;
 
-  left: 50%;
-  top: 50%;
+    z-index:
+        2;
 
-  transform:
-    translate(-50%, -50%);
+    left:
+        50%;
 
-  width: auto;
+    top:
+        50%;
 
-  height: 97%;
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
 
-  max-width: 97%;
-  max-height: 97%;
+    width:
+        auto;
 
-  object-fit: contain;
+    height:
+        98%;
 
-  object-position: center;
+    max-width:
+        98%;
 
-  display: block;
+    max-height:
+        98%;
 
-  border-radius: 3px;
+    object-fit:
+        contain;
 
-  box-shadow:
-    0 10px 35px rgba(0,0,0,.38);
+    object-position:
+        center;
+
+    display:
+        block;
+
+    border-radius:
+        3px;
+
+    box-shadow:
+
+        0 10px 35px
+        rgba(0,0,0,.35);
+
 }
 
 
-/* ==========================================
-   FLECHAS
-========================================== */
+
+/* =========================================================
+   BOTONES SIGUIENTE / ANTERIOR
+========================================================= */
 
 .nav {
-  display: none;
 
-  position: fixed;
+    display:
+        none;
 
-  z-index: 100;
+    position:
+        fixed;
 
-  top: 50%;
+    z-index:
+        100;
 
-  transform:
-    translateY(-50%);
+    top:
+        50%;
 
-  width: 46px;
-  height: 46px;
+    transform:
+        translateY(-50%);
 
-  border-radius: 50%;
+    width:
+        46px;
 
-  border:
-    1px solid rgba(255,255,255,.45);
+    height:
+        46px;
 
-  background:
-    rgba(0,0,0,.65);
+    border-radius:
+        50%;
 
-  color: white;
+    border:
+        1px solid
+        rgba(255,255,255,.45);
 
-  font-size: 28px;
+    background:
+        rgba(0,0,0,.68);
 
-  cursor: pointer;
+    color:
+        white;
+
+    font-size:
+        28px;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
 }
+
+
 
 #prev {
-  left:
-    max(5px, env(safe-area-inset-left));
+
+    left:
+
+        max(
+            5px,
+            env(safe-area-inset-left)
+        );
+
 }
+
 
 #next {
-  right:
-    max(5px, env(safe-area-inset-right));
+
+    right:
+
+        max(
+            5px,
+            env(safe-area-inset-right)
+        );
+
 }
 
 
-/* ==========================================
+.nav:active {
+
+    transform:
+        translateY(-50%)
+        scale(.92);
+
+}
+
+
+
+/* =========================================================
    AUDIO
-========================================== */
+========================================================= */
 
 #audioPanel {
-  display: none;
 
-  position: fixed;
+    display:
+        none;
 
-  z-index: 200;
+    position:
+        fixed;
 
-  top:
-    max(12px, env(safe-area-inset-top));
+    z-index:
+        200;
 
-  left: 50%;
+    top:
 
-  transform:
-    translateX(-50%);
+        max(
+            10px,
+            env(safe-area-inset-top)
+        );
 
-  width:
-    min(430px, 88vw);
+    left:
+        50%;
 
-  padding:
-    9px;
+    transform:
+        translateX(-50%);
 
-  border-radius:
-    12px;
+    width:
+        min(
+            420px,
+            84vw
+        );
 
-  background:
-    rgba(0,0,0,.72);
+    padding:
+        7px;
 
-  backdrop-filter:
-    blur(10px);
+    border-radius:
+        12px;
 
-  -webkit-backdrop-filter:
-    blur(10px);
+    background:
+        rgba(0,0,0,.68);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
 }
 
-
-/*
-   Dejamos controles nativos mientras
-   comprobamos el audio.
-
-   Esto es deliberado.
-*/
 
 #audioPlayer {
-  width: 100%;
-  height: 40px;
+
+    width:
+        100%;
+
+    height:
+        38px;
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    CONTADOR
-========================================== */
+========================================================= */
 
 #counter {
-  display: none;
 
-  position: fixed;
+    display:
+        none;
 
-  z-index: 100;
+    position:
+        fixed;
 
-  left: 50%;
+    z-index:
+        100;
 
-  bottom:
-    max(12px, env(safe-area-inset-bottom));
+    left:
+        50%;
 
-  transform:
-    translateX(-50%);
+    bottom:
 
-  padding:
-    7px 14px;
+        max(
+            12px,
+            env(safe-area-inset-bottom)
+        );
 
-  border-radius: 30px;
+    transform:
+        translateX(-50%);
 
-  background:
-    rgba(0,0,0,.70);
+    background:
+        rgba(0,0,0,.68);
 
-  font-family: Arial, sans-serif;
+    padding:
+        7px 15px;
 
-  font-size: 12px;
+    border-radius:
+        25px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        12px;
+
 }
 
 
-/* ==========================================
-   DIAGNÓSTICO
-========================================== */
+
+/* =========================================================
+   MENSAJE DE ESTADO
+
+   Lo dejamos por ahora para verificar
+   imágenes y canciones.
+========================================================= */
 
 #status {
-  position: fixed;
 
-  z-index: 300;
+    position:
+        fixed;
 
-  left:
-    max(8px, env(safe-area-inset-left));
+    z-index:
+        300;
 
-  bottom:
-    max(8px, env(safe-area-inset-bottom));
+    left:
 
-  max-width: 70vw;
+        max(
+            8px,
+            env(safe-area-inset-left)
+        );
 
-  padding:
-    7px 9px;
+    bottom:
 
-  border-radius: 5px;
+        max(
+            8px,
+            env(safe-area-inset-bottom)
+        );
 
-  background:
-    rgba(0,0,0,.80);
+    max-width:
+        65vw;
 
-  color:
-    #ddd;
+    background:
+        rgba(0,0,0,.75);
 
-  font-family:
-    Arial, sans-serif;
+    color:
+        #ddd;
 
-  font-size:
-    10px;
+    padding:
+        6px 9px;
+
+    border-radius:
+        5px;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:
+        10px;
+
 }
 
 
-/* ==========================================
+
+/* =========================================================
    iPHONE
-========================================== */
+========================================================= */
 
-@media (max-width: 700px) {
-
-  #cover {
-
-    width:
-      min(370px, 90vw);
-
-    height:
-      min(660px, 79dvh);
-
-  }
+@media
+(max-width: 700px) {
 
 
-  /*
-     Casi la misma proporción
-     que tus imágenes 9:16.
-  */
+    /*
+       Portada
+    */
 
-  #book {
+    #cover {
 
-    width:
-      min(375px, 92vw);
+        width:
+            min(
+                370px,
+                91vw
+            );
 
-    height:
-      min(665px, 79dvh);
+        height:
+            min(
+                660px,
+                80dvh
+            );
 
-  }
-
-
-  #mainImage {
-
-    height: 98%;
-
-    max-height: 98%;
-
-    max-width: 98%;
-
-  }
+    }
 
 
-  .nav {
 
-    width: 42px;
-    height: 42px;
+    /*
+       Libro muy cercano a 9:16.
 
-    font-size: 25px;
+       Esto permite aprovechar casi toda
+       la imagen sin cortar la letra.
+    */
 
-  }
+    #book {
+
+        width:
+            min(
+                400px,
+                96vw
+            );
+
+        height:
+            min(
+                710px,
+                84dvh
+            );
+
+    }
+
+
+
+    /*
+       Imagen prácticamente al máximo.
+    */
+
+    #mainImage {
+
+        width:
+            auto;
+
+        height:
+            100%;
+
+        max-width:
+            100%;
+
+        max-height:
+            100%;
+
+        object-fit:
+            contain;
+
+    }
+
+
+
+    .nav {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        font-size:
+            25px;
+
+    }
+
+
+
+    #audioPanel {
+
+        width:
+            min(
+                370px,
+                82vw
+            );
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   iPHONE PEQUEÑO
+========================================================= */
+
+@media
+(max-width: 390px) {
+
+
+    #book {
+
+        width:
+            96vw;
+
+        height:
+            82dvh;
+
+    }
+
+
+    #cover {
+
+        width:
+            88vw;
+
+        height:
+            76dvh;
+
+    }
+
 
 }
 
@@ -474,722 +860,826 @@ body {
 </head>
 
 
+
 <body>
 
+
+
+<!-- =====================================================
+     ESCENARIO
+====================================================== -->
 
 <div id="stage">
 
 
-  <!-- PORTADA -->
+    <!-- =================================================
+         PORTADA
+    ================================================== -->
 
-  <div id="cover">
+    <div id="cover">
 
-    <div class="cover-content">
 
-      <div class="cover-title">
-        Mi Álbum
-      </div>
+        <div class="cover-content">
 
-      <button id="startButton">
-        ▶ Iniciar álbum
-      </button>
+
+            <div class="cover-title">
+
+                Mi Álbum
+
+            </div>
+
+
+            <button id="startButton">
+
+                ▶ Iniciar álbum
+
+            </button>
+
+
+        </div>
+
 
     </div>
 
-  </div>
 
 
-  <!-- LIBRO -->
+    <!-- =================================================
+         LIBRO
+    ================================================== -->
 
-  <div id="book">
+    <div id="book">
 
-    <div id="backgroundImage"></div>
 
-    <div id="darkLayer"></div>
+        <!-- fondo difuminado -->
 
-    <img
-      id="mainImage"
-      alt="Imagen del álbum"
-    >
+        <div id="backgroundImage"></div>
 
-  </div>
+
+        <!-- oscurecimiento -->
+
+        <div id="darkLayer"></div>
+
+
+        <!-- imagen principal -->
+
+        <img
+            id="mainImage"
+            alt="Imagen del álbum"
+        >
+
+
+    </div>
 
 
 </div>
 
 
+
+<!-- =====================================================
+     NAVEGACIÓN
+====================================================== -->
+
 <button
-  id="prev"
-  class="nav"
+    id="prev"
+    class="nav"
+    aria-label="Anterior"
 >
-  ‹
+
+    ‹
+
 </button>
 
 
 <button
-  id="next"
-  class="nav"
+    id="next"
+    class="nav"
+    aria-label="Siguiente"
 >
-  ›
+
+    ›
+
 </button>
 
 
-<!-- AUDIO NATIVO PARA DEPURACIÓN -->
+
+<!-- =====================================================
+     AUDIO
+====================================================== -->
 
 <div id="audioPanel">
 
-  <audio
-    id="audioPlayer"
-    controls
-    preload="auto"
-  ></audio>
+
+    <audio
+        id="audioPlayer"
+        controls
+        preload="auto"
+    ></audio>
+
 
 </div>
 
+
+
+<!-- =====================================================
+     CONTADOR
+====================================================== -->
 
 <div id="counter"></div>
 
 
+
+<!-- =====================================================
+     DIAGNÓSTICO
+====================================================== -->
+
 <div id="status">
-  Preparando álbum...
+
+    Preparando álbum...
+
 </div>
 
 
 
 <script>
 
+
 document.addEventListener(
 "DOMContentLoaded",
 function () {
 
 
-/* ==================================================
+
+/* =====================================================
    ELEMENTOS
-================================================== */
+===================================================== */
 
 const cover =
-  document.getElementById(
-    "cover"
-  );
+    document.getElementById(
+        "cover"
+    );
 
 
 const book =
-  document.getElementById(
-    "book"
-  );
+    document.getElementById(
+        "book"
+    );
 
 
 const mainImage =
-  document.getElementById(
-    "mainImage"
-  );
+    document.getElementById(
+        "mainImage"
+    );
 
 
 const backgroundImage =
-  document.getElementById(
-    "backgroundImage"
-  );
+    document.getElementById(
+        "backgroundImage"
+    );
 
 
 const startButton =
-  document.getElementById(
-    "startButton"
-  );
+    document.getElementById(
+        "startButton"
+    );
 
 
 const prevButton =
-  document.getElementById(
-    "prev"
-  );
+    document.getElementById(
+        "prev"
+    );
 
 
 const nextButton =
-  document.getElementById(
-    "next"
-  );
+    document.getElementById(
+        "next"
+    );
 
 
 const audioPlayer =
-  document.getElementById(
-    "audioPlayer"
-  );
+    document.getElementById(
+        "audioPlayer"
+    );
 
 
 const audioPanel =
-  document.getElementById(
-    "audioPanel"
-  );
+    document.getElementById(
+        "audioPanel"
+    );
 
 
 const counter =
-  document.getElementById(
-    "counter"
-  );
+    document.getElementById(
+        "counter"
+    );
 
 
 const status =
-  document.getElementById(
-    "status"
-  );
+    document.getElementById(
+        "status"
+    );
 
 
 
-/* ==================================================
-   CONFIGURACIÓN
-================================================== */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-const AUDIO_PORTADA =
-  "cancion_portada.mp3";
 
+/*
+   -1 significa portada.
+
+    1 significa fondo_1.jpeg
+
+    2 significa fondo_2.jpeg
+
+    etc.
+*/
 
 let paginaActual =
-  -1;
+    -1;
 
 
 let albumIniciado =
-  false;
+    false;
 
 
 
-/* ==================================================
-   CONSTRUIR URL CORRECTA
-================================================== */
+/* =====================================================
+   ARCHIVO DE AUDIO DE PORTADA
+===================================================== */
 
-function urlArchivo(nombre) {
+const AUDIO_PORTADA =
+    "./cancion_portada.mp3";
 
 
-  return new URL(
-    nombre,
-    window.location.href
-  ).href;
 
-
-}
-
-
-
-/* ==================================================
-   COMPROBAR ARCHIVO DE AUDIO
-
-   Esto nos dirá si GitHub realmente
-   está entregando el MP3.
-================================================== */
-
-async function diagnosticarAudio(
-  nombre
-) {
-
-
-  const url =
-    urlArchivo(nombre);
-
-
-  try {
-
-
-    const respuesta =
-      await fetch(
-
-        url,
-
-        {
-          method: "HEAD",
-          cache: "no-store"
-        }
-
-      );
-
-
-    const tipo =
-      respuesta.headers.get(
-        "content-type"
-      );
-
-
-    console.log(
-      "AUDIO:",
-      nombre
-    );
-
-
-    console.log(
-      "HTTP:",
-      respuesta.status
-    );
-
-
-    console.log(
-      "Content-Type:",
-      tipo
-    );
-
-
-    if (
-      !respuesta.ok
-    ) {
-
-
-      status.textContent =
-        `❌ ${nombre} no existe en GitHub (${respuesta.status})`;
-
-
-      return false;
-
-
-    }
-
-
-    if (
-      tipo &&
-      !tipo.includes("audio") &&
-      !tipo.includes("mpeg") &&
-      !tipo.includes("octet-stream")
-    ) {
-
-
-      status.textContent =
-        `⚠ ${nombre}: GitHub responde ${tipo}`;
-
-
-      return true;
-
-
-    }
-
-
-    status.textContent =
-      `✓ ${nombre} encontrado · ${tipo || "tipo desconocido"}`;
-
-
-    return true;
-
-
-  }
-
-  catch(error) {
-
-
-    console.error(
-      error
-    );
-
-
-    status.textContent =
-      `❌ Error consultando ${nombre}`;
-
-
-    return false;
-
-
-  }
-
-
-}
-
-
-
-/* ==================================================
+/* =====================================================
    REPRODUCIR AUDIO
-================================================== */
+===================================================== */
 
-async function reproducir(
-  nombre
+async function reproducirAudio(
+    archivo
 ) {
 
 
-  const existe =
-    await diagnosticarAudio(
-      nombre
+    console.log(
+        "Cargando audio:",
+        archivo
     );
 
 
-  if (!existe) {
+    /*
+       Detenemos la canción anterior.
+    */
 
-    return;
-
-  }
-
-
-  const url =
-    urlArchivo(nombre);
+    audioPlayer.pause();
 
 
-  console.log(
-    "Intentando reproducir:",
-    url
-  );
+    /*
+       Cambiamos archivo.
+    */
+
+    audioPlayer.src =
+        archivo;
 
 
-  audioPlayer.pause();
-
-
-  audioPlayer.src =
-    url;
-
-
-  audioPlayer.load();
+    audioPlayer.load();
 
 
 
-  try {
+    /*
+       Esperamos a intentar reproducir.
+    */
+
+    try {
 
 
-    await audioPlayer.play();
+        await audioPlayer.play();
 
 
-    status.textContent =
-      `▶ Reproduciendo ${nombre}`;
+        status.textContent =
+            "▶ Reproduciendo " +
+            archivo.replace(
+                "./",
+                ""
+            );
 
 
-  }
-
-  catch(error) {
-
-
-    console.error(
-      "PLAY ERROR:",
-      error
-    );
+        console.log(
+            "Audio funcionando:",
+            archivo
+        );
 
 
-    status.textContent =
-      `⚠ ${nombre} cargado. Pulsa ▶ en el reproductor.`;
+    }
+
+    catch(error) {
 
 
-  }
+        console.warn(
+            "El navegador no inició automáticamente:",
+            error
+        );
+
+
+        /*
+           El usuario puede tocar PLAY
+           directamente en el reproductor.
+        */
+
+        status.textContent =
+            "♫ Audio cargado · pulsa ▶ si es necesario";
+
+
+    }
 
 
 }
 
 
 
-/* ==================================================
-   ERRORES DEL ELEMENTO AUDIO
-================================================== */
+/* =====================================================
+   EVENTO: AUDIO CARGADO
+===================================================== */
+
+audioPlayer.addEventListener(
+"loadedmetadata",
+function () {
+
+
+    console.log(
+        "Audio cargado:",
+        audioPlayer.currentSrc
+    );
+
+
+    console.log(
+        "Duración:",
+        audioPlayer.duration
+    );
+
+
+});
+
+
+
+/* =====================================================
+   ERROR DE AUDIO
+===================================================== */
 
 audioPlayer.addEventListener(
 "error",
 function () {
 
 
-  const error =
-    audioPlayer.error;
+    if (
+        !audioPlayer.error
+    ) {
+
+        return;
+
+    }
 
 
-  if (!error) {
-
-    return;
-
-  }
+    let mensaje =
+        "Error de audio";
 
 
-  let mensaje =
-    "Error desconocido";
+    switch(
+        audioPlayer.error.code
+    ) {
 
 
-  if (
-    error.code === 1
-  ) {
+        case 1:
 
-    mensaje =
-      "reproducción cancelada";
+            mensaje =
+                "Audio cancelado";
 
-  }
+            break;
 
 
-  else if (
-    error.code === 2
-  ) {
+        case 2:
 
-    mensaje =
-      "error de red";
+            mensaje =
+                "Error al descargar el audio";
 
-  }
+            break;
 
 
-  else if (
-    error.code === 3
-  ) {
+        case 3:
 
-    mensaje =
-      "el navegador no puede decodificar este archivo";
+            mensaje =
+                "No se pudo decodificar el MP3";
 
-  }
+            break;
 
 
-  else if (
-    error.code === 4
-  ) {
+        case 4:
 
-    mensaje =
-      "el formato o archivo no es compatible";
+            mensaje =
+                "Formato de audio no compatible";
 
-  }
+            break;
 
 
-  status.textContent =
-    "❌ Audio: " + mensaje;
+    }
 
 
-  console.error(
+    status.textContent =
+        "❌ " + mensaje;
 
-    "MEDIA ERROR:",
 
-    error.code,
+    console.error(
 
-    audioPlayer.currentSrc
+        "ERROR AUDIO:",
 
-  );
+        audioPlayer.error.code,
+
+        audioPlayer.currentSrc
+
+    );
 
 
 });
 
 
 
-/* ==================================================
-   INICIAR PORTADA
-================================================== */
+/* =====================================================
+   INICIAR ÁLBUM
+
+   TODAVÍA SE QUEDA EN PORTADA.
+
+   Aquí comienza cancion_portada.mp3
+===================================================== */
 
 startButton.addEventListener(
 "click",
-function () {
+async function () {
 
 
-  albumIniciado =
-    true;
+    albumIniciado =
+        true;
 
 
-  paginaActual =
-    -1;
+    paginaActual =
+        -1;
 
 
-  audioPanel.style.display =
-    "block";
+    /*
+       Mostrar reproductor.
+    */
+
+    audioPanel.style.display =
+        "block";
 
 
-  nextButton.style.display =
-    "block";
+    /*
+       Mostrar flecha siguiente.
+    */
+
+    nextButton.style.display =
+        "block";
 
 
-  /*
-     La llamada se hace directamente
-     desde la interacción del usuario.
-  */
+    /*
+       Reproducir canción portada.
+    */
 
-  reproducir(
-    AUDIO_PORTADA
-  );
+    await reproducirAudio(
+        AUDIO_PORTADA
+    );
 
 
-  startButton.style.display =
-    "none";
+    /*
+       Ocultar botón de inicio.
+    */
+
+    startButton.style.display =
+        "none";
 
 
 });
 
 
 
-/* ==================================================
-   CARGAR IMAGEN INTERIOR
-================================================== */
+/* =====================================================
+   ABRIR UNA IMAGEN
+===================================================== */
 
 function abrirImagen(
-  numero
+    numero
 ) {
 
 
-  const nombreImagen =
-    `fondo_${numero}.jpeg`;
+    /*
+       Nombres automáticos:
+       
+       fondo_1.jpeg
+       cancion_1.mp3
+
+       fondo_2.jpeg
+       cancion_2.mp3
+    */
 
 
-  const nombreAudio =
-    `cancion_${numero}.mp3`;
+    const nombreImagen =
+        `./fondo_${numero}.jpeg`;
 
 
-  const imagenPrueba =
-    new Image();
+    const nombreAudio =
+        `./cancion_${numero}.mp3`;
 
 
-  imagenPrueba.onload =
-    function () {
+
+    /*
+       Primero comprobamos que
+       la imagen exista.
+    */
+
+    const prueba =
+        new Image();
 
 
-      paginaActual =
-        numero;
+    prueba.onload =
+        function () {
 
 
-      mainImage.src =
+            /*
+               Guardamos página.
+            */
+
+            paginaActual =
+                numero;
+
+
+
+            /*
+               Imagen principal.
+            */
+
+            mainImage.src =
+                nombreImagen;
+
+
+
+            /*
+               Fondo desenfocado.
+            */
+
+            backgroundImage
+                .style
+                .backgroundImage =
+
+                `url("${nombreImagen}")`;
+
+
+
+            /*
+               Ocultar portada.
+            */
+
+            cover.style.display =
+                "none";
+
+
+
+            /*
+               Mostrar libro.
+            */
+
+            book.style.display =
+                "block";
+
+
+
+            /*
+               Mostrar controles.
+            */
+
+            prevButton.style.display =
+                "block";
+
+
+            nextButton.style.display =
+                "block";
+
+
+            audioPanel.style.display =
+                "block";
+
+
+            counter.style.display =
+                "block";
+
+
+
+            /*
+               Número actual.
+            */
+
+            counter.textContent =
+                `Imagen ${numero}`;
+
+
+
+            /*
+               Reproducir canción correspondiente.
+            */
+
+            reproducirAudio(
+                nombreAudio
+            );
+
+
+        };
+
+
+
+    /*
+       Si la siguiente imagen no existe,
+       consideramos que terminó el álbum.
+    */
+
+    prueba.onerror =
+        function () {
+
+
+            status.textContent =
+                `Fin del álbum`;
+
+
+            console.log(
+                "No existe:",
+                nombreImagen
+            );
+
+
+        };
+
+
+
+    /*
+       Iniciar comprobación.
+    */
+
+    prueba.src =
         nombreImagen;
-
-
-      backgroundImage
-        .style
-        .backgroundImage =
-
-        `url("${nombreImagen}")`;
-
-
-      cover.style.display =
-        "none";
-
-
-      book.style.display =
-        "block";
-
-
-      prevButton.style.display =
-        "block";
-
-
-      nextButton.style.display =
-        "block";
-
-
-      counter.style.display =
-        "block";
-
-
-      counter.textContent =
-        `Imagen ${numero}`;
-
-
-      reproducir(
-        nombreAudio
-      );
-
-
-    };
-
-
-  imagenPrueba.onerror =
-    function () {
-
-
-      status.textContent =
-        `Fin del álbum · no existe ${nombreImagen}`;
-
-
-    };
-
-
-  imagenPrueba.src =
-    nombreImagen;
 
 
 }
 
 
 
-/* ==================================================
+/* =====================================================
    SIGUIENTE
-================================================== */
+===================================================== */
 
 nextButton.addEventListener(
 "click",
 function () {
 
 
-  if (!albumIniciado) {
+    if (
+        !albumIniciado
+    ) {
 
-    return;
+        return;
 
-  }
-
-
-  if (
-    paginaActual === -1
-  ) {
+    }
 
 
-    abrirImagen(1);
 
-    return;
+    /*
+       Portada -> primera imagen
+    */
+
+    if (
+        paginaActual === -1
+    ) {
 
 
-  }
+        abrirImagen(
+            1
+        );
 
 
-  abrirImagen(
-    paginaActual + 1
-  );
+        return;
+
+
+    }
+
+
+
+    /*
+       fondo_1 -> fondo_2
+       fondo_2 -> fondo_3
+       etc.
+    */
+
+    abrirImagen(
+        paginaActual + 1
+    );
 
 
 });
 
 
 
-/* ==================================================
+/* =====================================================
    ANTERIOR
-================================================== */
+===================================================== */
 
 prevButton.addEventListener(
 "click",
 function () {
 
 
-  if (
-    paginaActual > 1
-  ) {
+
+    /*
+       fondo_2 -> fondo_1
+       etc.
+    */
+
+    if (
+        paginaActual > 1
+    ) {
 
 
-    abrirImagen(
-      paginaActual - 1
-    );
+        abrirImagen(
+            paginaActual - 1
+        );
 
 
-    return;
+        return;
 
 
-  }
+    }
 
 
-  if (
-    paginaActual === 1
-  ) {
+
+    /*
+       fondo_1 -> portada
+    */
+
+    if (
+        paginaActual === 1
+    ) {
 
 
-    paginaActual =
-      -1;
+        paginaActual =
+            -1;
 
 
-    book.style.display =
-      "none";
+        book.style.display =
+            "none";
 
 
-    cover.style.display =
-      "block";
+        cover.style.display =
+            "block";
 
 
-    counter.style.display =
-      "none";
+        counter.style.display =
+            "none";
 
 
-    prevButton.style.display =
-      "none";
+        prevButton.style.display =
+            "none";
 
 
-    reproducir(
-      AUDIO_PORTADA
-    );
+        nextButton.style.display =
+            "block";
 
 
-  }
+        /*
+           Volvemos a canción de portada.
+        */
+
+        reproducirAudio(
+            AUDIO_PORTADA
+        );
+
+
+    }
 
 
 });
 
 
 
-/* ==================================================
-   GESTOS iPHONE
-================================================== */
+/* =====================================================
+   GESTOS TÁCTILES PARA iPHONE
 
-let inicioX =
-  0;
+   izquierda = siguiente
+   derecha   = anterior
+===================================================== */
+
+let touchStartX =
+    0;
 
 
-let inicioY =
-  0;
+let touchStartY =
+    0;
+
 
 
 book.addEventListener(
@@ -1197,18 +1687,28 @@ book.addEventListener(
 function(event) {
 
 
-  inicioX =
-    event.changedTouches[0].clientX;
+    if (
+        event.changedTouches.length === 0
+    ) {
+
+        return;
+
+    }
 
 
-  inicioY =
-    event.changedTouches[0].clientY;
+    touchStartX =
+        event.changedTouches[0].clientX;
+
+
+    touchStartY =
+        event.changedTouches[0].clientY;
 
 
 },
 {
-  passive: true
+    passive: true
 });
+
 
 
 book.addEventListener(
@@ -1216,106 +1716,161 @@ book.addEventListener(
 function(event) {
 
 
-  const finalX =
-    event.changedTouches[0].clientX;
+    if (
+        event.changedTouches.length === 0
+    ) {
+
+        return;
+
+    }
 
 
-  const finalY =
-    event.changedTouches[0].clientY;
+    const touchEndX =
+        event.changedTouches[0].clientX;
 
 
-  const dx =
-    finalX - inicioX;
+    const touchEndY =
+        event.changedTouches[0].clientY;
 
 
-  const dy =
-    finalY - inicioY;
+
+    const diferenciaX =
+        touchEndX -
+        touchStartX;
 
 
-  if (
-    Math.abs(dx) <
-    45
-  ) {
-
-    return;
-
-  }
+    const diferenciaY =
+        touchEndY -
+        touchStartY;
 
 
-  if (
-    Math.abs(dy) >
-    Math.abs(dx)
-  ) {
 
-    return;
+    /*
+       Ignorar desplazamientos pequeños.
+    */
 
-  }
+    if (
+        Math.abs(
+            diferenciaX
+        ) < 45
+    ) {
 
+        return;
 
-  if (
-    dx < 0
-  ) {
-
-
-    nextButton.click();
+    }
 
 
-  }
 
-  else {
+    /*
+       Ignorar movimiento
+       principalmente vertical.
+    */
+
+    if (
+        Math.abs(
+            diferenciaY
+        ) >
+        Math.abs(
+            diferenciaX
+        )
+    ) {
+
+        return;
+
+    }
 
 
-    prevButton.click();
+
+    /*
+       Deslizar hacia izquierda:
+       siguiente.
+    */
+
+    if (
+        diferenciaX < 0
+    ) {
 
 
-  }
+        nextButton.click();
+
+
+    }
+
+
+
+    /*
+       Deslizar hacia derecha:
+       anterior.
+    */
+
+    else {
+
+
+        prevButton.click();
+
+
+    }
 
 
 },
 {
-  passive: true
+    passive: true
 });
 
 
 
-/* ==================================================
-   TECLADO
-================================================== */
+/* =====================================================
+   TECLADO EN COMPUTADORA
+===================================================== */
 
 document.addEventListener(
 "keydown",
 function(event) {
 
 
-  if (
-    event.key ===
-    "ArrowRight"
-  ) {
+    if (
+        !albumIniciado
+    ) {
+
+        return;
+
+    }
 
 
-    nextButton.click();
+    if (
+        event.key ===
+        "ArrowRight"
+    ) {
 
 
-  }
+        nextButton.click();
 
 
-  if (
-    event.key ===
-    "ArrowLeft"
-  ) {
+    }
 
 
-    prevButton.click();
+    if (
+        event.key ===
+        "ArrowLeft"
+    ) {
 
 
-  }
+        prevButton.click();
+
+
+    }
 
 
 });
 
 
+
 });
+
+
 </script>
 
+
 </body>
+
 </html>
